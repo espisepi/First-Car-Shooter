@@ -16,7 +16,7 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const http_1 = __importDefault(require("http"));
 const socket_io_1 = __importDefault(require("socket.io"));
-const gameSketchbook_1 = __importDefault(require("./features/sketchbook/gameSketchbook"));
+const gameSketchbook_1 = __importDefault(require("./espinaco-features/sketchbook/gameSketchbook"));
 //dotenv.config({path: __dirname +'/.env'})
 dotenv_1.default.config();
 console.log('process.env.PORT = ' + process.env.PORT);

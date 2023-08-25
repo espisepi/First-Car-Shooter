@@ -14,7 +14,7 @@ import path from 'path'
 import http from 'http'
 import socketIO from 'socket.io'
 import Game from './game'
-import GameSketchbook from './features/sketchbook/gameSketchbook'
+import GameSketchbook from './espinaco-features/sketchbook/gameSketchbook'
 
 //dotenv.config({path: __dirname +'/.env'})
 dotenv.config()
