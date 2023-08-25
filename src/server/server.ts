@@ -14,6 +14,7 @@ import path from 'path'
 import http from 'http'
 import socketIO from 'socket.io'
 import Game from './game'
+import GameSketchbook from './features/sketchbook/gameSketchbook'
 
 //dotenv.config({path: __dirname +'/.env'})
 dotenv.config()
@@ -37,7 +38,8 @@ class App {
 
         this.io = new socketIO.Server(this.server)
 
-        new Game(this.io)
+        // new Game(this.io)
+        new GameSketchbook(this.io)
     }
 
     Start() {
