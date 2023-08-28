@@ -72,7 +72,7 @@ export class World {
     // public scenarioGUIFolder: any
     public updatables: IUpdatable[] = []
 
-    // private lastScenarioID: string
+    private lastScenarioID: string = 'lastScenarioID undefined'
 
     constructor(worldScenePath?: any) {
         console.log('World Sketchbook run! :) =============')
@@ -443,22 +443,23 @@ export class World {
         //         this.launchScenario(defaultScenarioID, loadingManager)
     }
 
-    // public launchScenario(
-    //     scenarioID: string,
-    //     loadingManager?: LoadingManager
-    // ): void {
-    //     this.lastScenarioID = scenarioID
+    public launchScenario(
+        scenarioID: string,
+        loadingManager?: LoadingManager
+    ): void {
+        this.lastScenarioID = scenarioID
 
-    //     this.clearEntities()
+        // sepinaco commented
+        // this.clearEntities()
 
-    //     // Launch default scenario
-    //     if (!loadingManager) loadingManager = new LoadingManager(this)
-    //     for (const scenario of this.scenarios) {
-    //         if (scenario.id === scenarioID || scenario.spawnAlways) {
-    //             scenario.launch(loadingManager, this)
-    //         }
-    //     }
-    // }
+        // Launch default scenario
+        if (!loadingManager) loadingManager = new LoadingManager(this)
+        for (const scenario of this.scenarios) {
+            if (scenario.id === scenarioID || scenario.spawnAlways) {
+                scenario.launch(loadingManager, this)
+            }
+        }
+    }
 
     // public restartScenario(): void {
     //     if (this.lastScenarioID !== undefined) {

@@ -6,7 +6,7 @@ import { LoadingManager } from '../core/LoadingManager'
 
 export class Scenario {
     public id: string
-    public name?: string
+    public name: string = 'undefined name'
     public spawnAlways: boolean = false
     public default: boolean = false
     public world: World
@@ -55,7 +55,7 @@ export class Scenario {
             this.initialCameraAngle = root.userData.camera_angle
         }
 
-        // if (!this.invisible) this.createLaunchLink()
+        if (!this.invisible) this.createLaunchLink()
 
         // Find all scenario spawns and enitites
         root.traverse((child) => {
@@ -96,28 +96,26 @@ export class Scenario {
         })
     }
 
-    // sepinaco commented
-    // public createLaunchLink(): void
-    // {
-    // 	this.world.params[this.name] = () =>
-    // 	{
-    // 		this.world.launchScenario(this.id);
-    // 	};
-    // 	this.world.scenarioGUIFolder.add(this.world.params, this.name);
-    // }
+    public createLaunchLink(): void {
+        // sepinaco commented
+        this.world.params[this.name] = () => {
+            this.world.launchScenario(this.id)
+        }
+        // sepinaco commented
+        // this.world.scenarioGUIFolder.add(this.world.params, this.name)
+    }
 
-    // public launch(loadingManager: LoadingManager, world: World): void
-    // {
-    // 	this.spawnPoints.forEach((sp) => {
-    // 		sp.spawn(loadingManager, world);
-    // 	});
+    public launch(loadingManager: LoadingManager, world: World): void {
+        // sepinaco commented
+        // this.spawnPoints.forEach((sp) => {
+        //     sp.spawn(loadingManager, world)
+        // })
 
-    // 	if (!this.spawnAlways)
-    // 	{
-    // 		loadingManager.createWelcomeScreenCallback(this);
-
-    // 		world.cameraOperator.theta = this.initialCameraAngle;
-    // 		world.cameraOperator.phi = 15;
-    // 	}
-    // }
+        if (!this.spawnAlways) {
+            // sepinaco commented
+            // loadingManager.createWelcomeScreenCallback(this)
+            // world.cameraOperator.theta = this.initialCameraAngle
+            // world.cameraOperator.phi = 15
+        }
+    }
 }
