@@ -98,6 +98,12 @@ export class Scenario {
 
     public createLaunchLink(): void {
         // sepinaco commented
+        // console.log({
+        //     param: this.world.params,
+        //     world: this.world,
+        //     name: this.name,
+        //     id: this.id,
+        // })
         this.world.params[this.name] = () => {
             this.world.launchScenario(this.id)
         }

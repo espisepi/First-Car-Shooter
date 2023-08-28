@@ -59,7 +59,17 @@ export class World {
     public requestDelta?: number
     public sinceLastFrame: number
     public justRendered: boolean
-    public params: any
+    public params: any = {
+        Pointer_Lock: true,
+        Mouse_Sensitivity: 0.3,
+        Time_Scale: 1,
+        Shadows: true,
+        FXAA: true,
+        Debug_Physics: false,
+        Debug_FPS: false,
+        Sun_Elevation: 50,
+        Sun_Rotation: 145,
+    }
     // public inputManager: InputManager
     // public cameraOperator: CameraOperator
     public timeScaleTarget: number = 1
