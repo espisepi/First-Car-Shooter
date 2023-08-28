@@ -16,7 +16,7 @@ export class Scenario {
     private rootNode: THREE.Object3D
     private spawnPoints: ISpawnPoint[] = []
     private invisible: boolean = false
-    private initialCameraAngle?: number
+    private initialCameraAngle: number = 65 // sepinaco inventado codigo
 
     constructor(root: THREE.Object3D, world: World) {
         this.rootNode = root
@@ -119,8 +119,10 @@ export class Scenario {
         if (!this.spawnAlways) {
             loadingManager.createWelcomeScreenCallback(this)
             // sepinaco commented
-            // world.cameraOperator.theta = this.initialCameraAngle
-            // world.cameraOperator.phi = 15
+            if (world.cameraOperator) {
+                world.cameraOperator.theta = this.initialCameraAngle
+                world.cameraOperator.phi = 15
+            }
         }
     }
 }

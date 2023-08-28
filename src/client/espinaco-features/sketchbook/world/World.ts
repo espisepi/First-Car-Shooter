@@ -7,7 +7,7 @@ import { IWorldEntity } from '../interfaces/IWorldEntity'
 // import Swal from 'sweetalert2'
 // import * as $ from 'jquery'
 
-// import { CameraOperator } from '../core/CameraOperator'
+import { CameraOperator } from '../core/CameraOperator'
 // import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
 // import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 // import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass'
@@ -71,7 +71,7 @@ export class World {
         Sun_Rotation: 145,
     }
     // public inputManager: InputManager
-    // public cameraOperator: CameraOperator
+    public cameraOperator?: CameraOperator
     public timeScaleTarget: number = 1
     // public console: InfoStack
     // public cannonDebugRenderer: CannonDebugRenderer
@@ -509,24 +509,21 @@ export class World {
         }
     }
 
-    // sepinaco commented
-    // public updateControls(controls: any): void {
-    //     let html = ''
-    //     html += '<h2 class="controls-title">Controls:</h2>'
-
-    //     controls.forEach((row) => {
-    //         html += '<div class="ctrl-row">'
-    //         row.keys.forEach((key) => {
-    //             if (key === '+' || key === 'and' || key === 'or' || key === '&')
-    //                 html += '&nbsp;' + key + '&nbsp;'
-    //             else html += '<span class="ctrl-key">' + key + '</span>'
-    //         })
-
-    //         html += '<span class="ctrl-desc">' + row.desc + '</span></div>'
-    //     })
-
-    //     document.getElementById('controls').innerHTML = html
-    // }
+    public updateControls(controls: any): void {
+        // sepinaco commented
+        // let html = ''
+        // html += '<h2 class="controls-title">Controls:</h2>'
+        // controls.forEach((row) => {
+        //     html += '<div class="ctrl-row">'
+        //     row.keys.forEach((key) => {
+        //         if (key === '+' || key === 'and' || key === 'or' || key === '&')
+        //             html += '&nbsp;' + key + '&nbsp;'
+        //         else html += '<span class="ctrl-key">' + key + '</span>'
+        //     })
+        //     html += '<span class="ctrl-desc">' + row.desc + '</span></div>'
+        // })
+        // document.getElementById('controls').innerHTML = html
+    }
 
     // private generateHTML(): void {
     //     // Fonts
