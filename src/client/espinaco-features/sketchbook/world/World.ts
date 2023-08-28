@@ -70,6 +70,8 @@ export class World {
     // private lastScenarioID: string
 
     constructor(worldScenePath?: any) {
+        console.log('World Sketchbook run! :) =============')
+
         const scope = this
 
         // sepinaco commented
