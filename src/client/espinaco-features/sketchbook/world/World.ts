@@ -18,9 +18,13 @@ import { IWorldEntity } from '../interfaces/IWorldEntity'
 // import * as GUI from '../../lib/utils/dat.gui'
 // import { CannonDebugRenderer } from '../../lib/cannon/CannonDebugRenderer'
 import * as _ from 'lodash' // to fix error: yarn add --dev @types/lodash
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import { LoadingManager } from '../core/LoadingManager'
 
 // import { InputManager } from '../core/InputManager'
-// import * as Utils from '../core/FunctionLibrary'
+import * as Utils from '../core/FunctionLibrary'
+import { BoxCollider } from '../physics/colliders/BoxCollider'
+import { Path } from './Path'
 // import { LoadingManager } from '../core/LoadingManager'
 // import { InfoStack } from '../core/InfoStack'
 // import { UIManager } from '../core/UIManager'
@@ -63,7 +67,7 @@ export class World {
     // public scenarios: Scenario[] = []
     // public characters: Character[] = []
     // public vehicles: Vehicle[] = []
-    // public paths: Path[] = []
+    public paths: Path[] = []
     // public scenarioGUIFolder: any
     public updatables: IUpdatable[] = []
 
@@ -183,24 +187,25 @@ export class World {
         // Load scene if path is supplied
         if (worldScenePath !== undefined) {
             // sepinaco commented
-            // let loadingManager = new LoadingManager(this)
-            // loadingManager.onFinishedCallback = () => {
-            //     this.update(1, 1)
-            //     this.setTimeScale(1)
-            //     Swal.fire({
-            //         title: 'Welcome to Sketchbook!',
-            //         text: 'Feel free to explore the world and interact with available vehicles. There are also various scenarios ready to launch from the right panel.',
-            //         footer: '<a href="https://github.com/swift502/Sketchbook" target="_blank">GitHub page</a><a href="https://discord.gg/fGuEqCe" target="_blank">Discord server</a>',
-            //         confirmButtonText: 'Okay',
-            //         buttonsStyling: false,
-            //         onClose: () => {
-            //             UIManager.setUserInterfaceVisible(true)
-            //         },
-            //     })
-            // }
-            // loadingManager.loadGLTF(worldScenePath, (gltf) => {
-            //     this.loadScene(loadingManager, gltf)
-            // })
+            let loadingManager = new LoadingManager(this)
+            loadingManager.onFinishedCallback = () => {
+                this.update(1, 1)
+                this.setTimeScale(1)
+                // sepinaco commented
+                // Swal.fire({
+                //     title: 'Welcome to Sketchbook!',
+                //     text: 'Feel free to explore the world and interact with available vehicles. There are also various scenarios ready to launch from the right panel.',
+                //     footer: '<a href="https://github.com/swift502/Sketchbook" target="_blank">GitHub page</a><a href="https://discord.gg/fGuEqCe" target="_blank">Discord server</a>',
+                //     confirmButtonText: 'Okay',
+                //     buttonsStyling: false,
+                //     onClose: () => {
+                //         UIManager.setUserInterfaceVisible(true)
+                //     },
+                // })
+            }
+            loadingManager.loadGLTF(worldScenePath, (gltf: GLTF) => {
+                this.loadScene(loadingManager, gltf)
+            })
         } else {
             // sepinaco commented
             // UIManager.setUserInterfaceVisible(true)
@@ -335,8 +340,9 @@ export class World {
     }
 
     public setTimeScale(value: number): void {
-        this.params.Time_Scale = value
-        this.timeScaleTarget = value
+        // sepinaco commented
+        // this.params.Time_Scale = value
+        // this.timeScaleTarget = value
     }
 
     public add(worldEntity: IWorldEntity): void {
@@ -359,76 +365,82 @@ export class World {
     }
 
     // sepinaco commented
-    // public loadScene(loadingManager: LoadingManager, gltf: any): void {
-    //     gltf.scene.traverse((child) => {
-    //         if (child.hasOwnProperty('userData')) {
-    //             if (child.type === 'Mesh') {
-    //                 Utils.setupMeshProperties(child)
-    //                 this.sky.csm.setupMaterial(child.material)
+    public loadScene(loadingManager: LoadingManager, gltf: any): void {
+        gltf.scene.traverse((child: any) => {
+            if (child.hasOwnProperty('userData')) {
+                if (child.type === 'Mesh') {
+                    Utils.setupMeshProperties(child)
+                    // sepinaco commented
+                    // this.sky.csm.setupMaterial(child.material)
 
-    //                 if (child.material.name === 'ocean') {
-    //                     this.registerUpdatable(new Ocean(child, this))
-    //                 }
-    //             }
+                    if (child.material.name === 'ocean') {
+                        // sepinaco commented
+                        // this.registerUpdatable(new Ocean(child, this))
+                    }
+                }
 
-    //             if (child.userData.hasOwnProperty('data')) {
-    //                 if (child.userData.data === 'physics') {
-    //                     if (child.userData.hasOwnProperty('type')) {
-    //                         // Convex doesn't work! Stick to boxes!
-    //                         if (child.userData.type === 'box') {
-    //                             let phys = new BoxCollider({
-    //                                 size: new THREE.Vector3(
-    //                                     child.scale.x,
-    //                                     child.scale.y,
-    //                                     child.scale.z
-    //                                 ),
-    //                             })
-    //                             phys.body.position.copy(
-    //                                 Utils.cannonVector(child.position)
-    //                             )
-    //                             phys.body.quaternion.copy(
-    //                                 Utils.cannonQuat(child.quaternion)
-    //                             )
-    //                             phys.body.computeAABB()
+                if (child.userData.hasOwnProperty('data')) {
+                    if (child.userData.data === 'physics') {
+                        if (child.userData.hasOwnProperty('type')) {
+                            // Convex doesn't work! Stick to boxes!
+                            if (child.userData.type === 'box') {
+                                let phys = new BoxCollider({
+                                    size: new THREE.Vector3(
+                                        child.scale.x,
+                                        child.scale.y,
+                                        child.scale.z
+                                    ),
+                                })
+                                phys.body.position.copy(
+                                    Utils.cannonVector(child.position)
+                                )
+                                phys.body.quaternion.copy(
+                                    Utils.cannonQuat(child.quaternion)
+                                )
+                                // sepinaco commented
+                                // phys.body.computeAABB()
 
-    //                             phys.body.shapes.forEach((shape) => {
-    //                                 shape.collisionFilterMask =
-    //                                     ~CollisionGroups.TrimeshColliders
-    //                             })
+                                // sepinaco commented
+                                // phys.body.shapes.forEach((shape) => {
+                                //     shape.collisionFilterMask =
+                                //         ~CollisionGroups.TrimeshColliders
+                                // })
 
-    //                             this.physicsWorld.addBody(phys.body)
-    //                         } else if (child.userData.type === 'trimesh') {
-    //                             let phys = new TrimeshCollider(child, {})
-    //                             this.physicsWorld.addBody(phys.body)
-    //                         }
+                                this.physicsWorld.addBody(phys.body)
+                            } else if (child.userData.type === 'trimesh') {
+                                // sepinaco commented
+                                // let phys = new TrimeshCollider(child, {})
+                                // this.physicsWorld.addBody(phys.body)
+                            }
 
-    //                         child.visible = false
-    //                     }
-    //                 }
+                            child.visible = false
+                        }
+                    }
 
-    //                 if (child.userData.data === 'path') {
-    //                     this.paths.push(new Path(child))
-    //                 }
+                    if (child.userData.data === 'path') {
+                        this.paths.push(new Path(child))
+                    }
 
-    //                 if (child.userData.data === 'scenario') {
-    //                     this.scenarios.push(new Scenario(child, this))
-    //                 }
-    //             }
-    //         }
-    //     })
-    // this.graphicsWorld.add(gltf.scene)
+                    if (child.userData.data === 'scenario') {
+                        // sepinaco commented
+                        // this.scenarios.push(new Scenario(child, this))
+                    }
+                }
+            }
+        })
+        this.graphicsWorld.add(gltf.scene)
 
-    //     // Launch default scenario
-    //     let defaultScenarioID: string
-    //     for (const scenario of this.scenarios) {
-    //         if (scenario.default) {
-    //             defaultScenarioID = scenario.id
-    //             break
-    //         }
-    //     }
-    //     if (defaultScenarioID !== undefined)
-    //         this.launchScenario(defaultScenarioID, loadingManager)
-    // }
+        //     // Launch default scenario
+        //     let defaultScenarioID: string
+        //     for (const scenario of this.scenarios) {
+        //         if (scenario.default) {
+        //             defaultScenarioID = scenario.id
+        //             break
+        //         }
+        //     }
+        //     if (defaultScenarioID !== undefined)
+        //         this.launchScenario(defaultScenarioID, loadingManager)
+    }
 
     // public launchScenario(
     //     scenarioID: string,
