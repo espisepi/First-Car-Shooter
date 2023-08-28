@@ -7,7 +7,8 @@ const game_1 = __importDefault(require("../../game"));
 class GameSketchbook extends game_1.default {
     constructor(io) {
         super(io);
-        console.log('sketchbookGame run! v1');
+        // Los console.log del server se miran en terminal, no en el navegador
+        console.log('sketchbookGame Server run! v1 ===========');
     }
 }
 exports.default = GameSketchbook;

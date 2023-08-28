@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import Game from './game'
 import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
+import GameSketchbook from './espinaco-features/sketchbook/gameSketchbook'
 
 const scene = new THREE.Scene()
 
@@ -30,7 +31,8 @@ camera.position.set(0, 0, 2000)
 const listener = new THREE.AudioListener()
 camera.add(listener)
 
-const game = new Game(scene, camera, renderer, listener, labelRenderer)
+// const game = new Game(scene, camera, renderer, listener, labelRenderer)
+const game = new GameSketchbook(scene, camera, renderer, listener, labelRenderer)
 
 window.addEventListener('resize', onWindowResize, false)
 function onWindowResize() {
