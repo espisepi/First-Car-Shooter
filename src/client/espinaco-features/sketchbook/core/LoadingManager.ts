@@ -5,6 +5,7 @@ import { UIManager } from './UIManager'
 // sepinaco commented
 // import Swal from 'sweetalert2';
 import { World } from '../world/World'
+import { Scenario } from '../world/Scenario'
 
 export class LoadingManager {
     public firstLoad: boolean = true
@@ -65,25 +66,28 @@ export class LoadingManager {
         }
     }
 
-    // sepinaco commented
-    // public createWelcomeScreenCallback(scenario: Scenario): void {
-    //     if (this.onFinishedCallback === undefined) {
-    //         this.onFinishedCallback = () => {
-    //             this.world.update(1, 1)
+    public createWelcomeScreenCallback(scenario: Scenario): void {
+        if (this.onFinishedCallback === undefined) {
+            this.onFinishedCallback = () => {
+                this.world.update(1, 1)
 
-    //             Swal.fire({
-    //                 title: scenario.descriptionTitle,
-    //                 html: scenario.descriptionContent,
-    //                 confirmButtonText: 'Play',
-    //                 buttonsStyling: false,
-    //                 onClose: () => {
-    //                     this.world.setTimeScale(1)
-    //                     UIManager.setUserInterfaceVisible(true)
-    //                 },
-    //             })
-    //         }
-    //     }
-    // }
+                // sepinaco commented
+                // Swal.fire({
+                //     title: scenario.descriptionTitle,
+                //     html: scenario.descriptionContent,
+                //     confirmButtonText: 'Play',
+                //     buttonsStyling: false,
+                //     onClose: () => {
+                //         this.world.setTimeScale(1)
+                //         UIManager.setUserInterfaceVisible(true)
+                //     },
+                // })
+                // sepinaco sustituye por
+                this.world.setTimeScale(1)
+                UIManager.setUserInterfaceVisible(true)
+            }
+        }
+    }
 
     private getLoadingPercentage(): number {
         let done = true

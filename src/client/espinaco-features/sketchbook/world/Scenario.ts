@@ -112,14 +112,13 @@ export class Scenario {
     }
 
     public launch(loadingManager: LoadingManager, world: World): void {
-        // sepinaco commented
-        // this.spawnPoints.forEach((sp) => {
-        //     sp.spawn(loadingManager, world)
-        // })
+        this.spawnPoints.forEach((sp) => {
+            sp.spawn(loadingManager, world)
+        })
 
         if (!this.spawnAlways) {
+            loadingManager.createWelcomeScreenCallback(this)
             // sepinaco commented
-            // loadingManager.createWelcomeScreenCallback(this)
             // world.cameraOperator.theta = this.initialCameraAngle
             // world.cameraOperator.phi = 15
         }
