@@ -25,6 +25,7 @@ import { LoadingManager } from '../core/LoadingManager'
 import * as Utils from '../core/FunctionLibrary'
 import { BoxCollider } from '../physics/colliders/BoxCollider'
 import { Path } from './Path'
+import { Scenario } from './Scenario'
 // import { LoadingManager } from '../core/LoadingManager'
 // import { InfoStack } from '../core/InfoStack'
 // import { UIManager } from '../core/UIManager'
@@ -64,7 +65,7 @@ export class World {
     public timeScaleTarget: number = 1
     // public console: InfoStack
     // public cannonDebugRenderer: CannonDebugRenderer
-    // public scenarios: Scenario[] = []
+    public scenarios: Scenario[] = []
     // public characters: Character[] = []
     // public vehicles: Vehicle[] = []
     public paths: Path[] = []
@@ -423,7 +424,7 @@ export class World {
 
                     if (child.userData.data === 'scenario') {
                         // sepinaco commented
-                        // this.scenarios.push(new Scenario(child, this))
+                        this.scenarios.push(new Scenario(child, this))
                     }
                 }
             }
