@@ -4,6 +4,8 @@ import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
 import * as Sketchbook from './sketchbook'
 
 export default class GameSketchbook extends Game {
+    public world: Sketchbook.World
+
     constructor(
         scene: THREE.Scene,
         camera: THREE.PerspectiveCamera,
@@ -19,11 +21,7 @@ export default class GameSketchbook extends Game {
             gameSketchbook: this,
         })
 
-        this.init()
-    }
-
-    private init(): void {
-        const world = new Sketchbook.World('build/assets/world.glb')
+        this.world = new Sketchbook.World('build/assets/world.glb')
     }
 
     public update(delta: number) {
