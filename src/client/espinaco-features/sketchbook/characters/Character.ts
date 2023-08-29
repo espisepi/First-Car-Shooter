@@ -1033,8 +1033,7 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             _.pull(world.characters, this)
 
             // Remove physics
-            // sepinaco commented
-            // world.physicsWorld.remove(this.characterCapsule.body)
+            world.physicsWorld.removeBody(this.characterCapsule.body)
 
             // Remove visuals
             world.graphicsWorld.remove(this)
