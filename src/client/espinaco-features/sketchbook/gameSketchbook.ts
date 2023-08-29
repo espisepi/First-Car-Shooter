@@ -15,7 +15,9 @@ export default class GameSketchbook extends Game {
         super(scene, camera, renderer, listener, labelRenderer)
 
         // Los console.log del client se miran en el navegador
-        console.log('sketchbookGame Client run! v1 ============================')
+        console.log('sketchbookGame Client run! v1 ============================', {
+            self: this,
+        })
 
         this.init()
     }
