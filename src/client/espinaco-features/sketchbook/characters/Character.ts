@@ -197,9 +197,8 @@ export class Character extends THREE.Object3D implements IWorldEntity {
      * @param {function} State
      */
     public setState(state: ICharacterState): void {
-        // sepinaco commented
-        // this.charState = state
-        // this.charState.onInputChange()
+        this.charState = state
+        this.charState.onInputChange()
     }
 
     public setPosition(x: number, y: number, z: number): void {
@@ -255,9 +254,8 @@ export class Character extends THREE.Object3D implements IWorldEntity {
     }
 
     public setBehaviour(behaviour: ICharacterAI): void {
-        // sepinaco commented
-        // behaviour.character = this
-        // this.behaviour = behaviour
+        behaviour.character = this
+        this.behaviour = behaviour
     }
 
     public setPhysicsEnabled(value: boolean): void {
