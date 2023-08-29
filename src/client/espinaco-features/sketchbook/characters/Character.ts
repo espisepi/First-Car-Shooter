@@ -903,15 +903,17 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             newVelocity.y = 0
 
             // Move on top of moving objects
-            // sepinaco commented
-            // if (character.rayResult.body.mass > 0) {
-            //     let pointVelocity = new CANNON.Vec3()
-            //     character.rayResult.body.getVelocityAtWorldPoint(
-            //         character.rayResult.hitPointWorld,
-            //         pointVelocity
-            //     )
-            //     newVelocity.add(Utils.threeVector(pointVelocity))
-            // }
+            if (
+                character?.rayResult?.body?.mass &&
+                character.rayResult.body.mass > 0
+            ) {
+                let pointVelocity = new CANNON.Vec3()
+                character.rayResult.body.getVelocityAtWorldPoint(
+                    character.rayResult.hitPointWorld,
+                    pointVelocity
+                )
+                newVelocity.add(Utils.threeVector(pointVelocity))
+            }
 
             // Measure the normal vector offset from direct "up" vector
             // and transform it into a matrix
@@ -935,11 +937,16 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             body.velocity.y = newVelocity.y
             body.velocity.z = newVelocity.z
             // Ground character
-            // sepinaco commented
-            // body.position.y =
-            //     character.rayResult.hitPointWorld.y +
-            //     character.rayCastLength +
-            //     newVelocity.y / character.world.physicsFrameRate
+            if (character?.world?.physicsFrameRate) {
+                body.position.y =
+                    character.rayResult.hitPointWorld.y +
+                    character.rayCastLength +
+                    newVelocity.y / character.world.physicsFrameRate
+            } else {
+                console.warn(
+                    'No existe valor para character.world.physicsFrameRate'
+                )
+            }
         } else {
             // If we're in air
             body.velocity.x = newVelocity.x
@@ -969,10 +976,10 @@ export class Character extends THREE.Object3D implements IWorldEntity {
                 // Moving objects compensation
                 let add = new CANNON.Vec3()
                 // sepinaco commented
-                // character.rayResult.body.getVelocityAtWorldPoint(
-                //     character.rayResult.hitPointWorld,
-                //     add
-                // )
+                character?.rayResult?.body?.getVelocityAtWorldPoint(
+                    character.rayResult.hitPointWorld,
+                    add
+                )
                 body.velocity.vsub(add, body.velocity)
             }
 
