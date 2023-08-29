@@ -457,8 +457,7 @@ export class World {
     ): void {
         this.lastScenarioID = scenarioID
 
-        // sepinaco commented
-        // this.clearEntities()
+        this.clearEntities()
 
         // Launch default scenario
         if (!loadingManager) loadingManager = new LoadingManager(this)
@@ -478,17 +477,17 @@ export class World {
     //     }
     // }
 
-    // public clearEntities(): void {
-    //     for (let i = 0; i < this.characters.length; i++) {
-    //         this.remove(this.characters[i])
-    //         i--
-    //     }
+    public clearEntities(): void {
+        for (let i = 0; i < this.characters.length; i++) {
+            this.remove(this.characters[i])
+            i--
+        }
 
-    //     for (let i = 0; i < this.vehicles.length; i++) {
-    //         this.remove(this.vehicles[i])
-    //         i--
-    //     }
-    // }
+        for (let i = 0; i < this.vehicles.length; i++) {
+            this.remove(this.vehicles[i])
+            i--
+        }
+    }
 
     public scrollTheTimeScale(scrollAmount: number): void {
         // Changing time scale with scroll wheel
