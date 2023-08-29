@@ -980,7 +980,7 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             } else {
                 // Moving objects compensation
                 let add = new CANNON.Vec3()
-                // sepinaco commented
+
                 character?.rayResult?.body?.getVelocityAtWorldPoint(
                     character.rayResult.hitPointWorld,
                     add
@@ -1006,7 +1006,6 @@ export class Character extends THREE.Object3D implements IWorldEntity {
 
             // Aqui haremos los calculos de preStep y postStep
             // sepinaco buen code debido al fucking deprecated de preStep y postStep
-            console.log({ worldsito: this.world?.physicsWorld })
             const self = this
             const body = this.characterCapsule.body
             this.world?.physicsWorld.addEventListener(
