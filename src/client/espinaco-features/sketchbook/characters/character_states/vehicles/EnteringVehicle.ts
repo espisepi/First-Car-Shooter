@@ -103,12 +103,20 @@ export class EnteringVehicle extends CharacterStateBase {
                 lerpPosition.z
             )
 
+            // sepinaco commented because deprecated
             THREE.Quaternion.slerp(
                 this.startRotation,
                 this.endRotation,
                 this.character.quaternion,
                 this.factorSimulator.position
             )
+            // sepinaco alternative to deprecated previous code (no funciona bien, ademas el codigo anterior creo que no pasa nada porque este deprecado)
+            // const qm = this.character.quaternion
+            // const qa = this.startRotation
+            // const qb = this.endRotation
+            // const t = this.factorSimulator.position
+            // const interpolatedQuaternion = qm.slerpQuaternions(qa, qb, t)
+            // this.character.quaternion.copy(interpolatedQuaternion)
         }
     }
 
