@@ -4,35 +4,30 @@ import * as _ from 'lodash'
 import * as Utils from '../core/FunctionLibrary'
 
 import { KeyBinding } from '../core/KeyBinding'
-// sepinaco commented
 import { VectorSpringSimulator } from '../physics/spring_simulation/VectorSpringSimulator'
 import { RelativeSpringSimulator } from '../physics/spring_simulation/RelativeSpringSimulator'
-// import { Idle } from './character_states/Idle';
-// import { EnteringVehicle } from './character_states/vehicles/EnteringVehicle';
-// import { ExitingVehicle } from './character_states/vehicles/ExitingVehicle';
-// import { OpenVehicleDoor as OpenVehicleDoor } from './character_states/vehicles/OpenVehicleDoor';
-// import { Driving } from './character_states/vehicles/Driving';
-// import { ExitingAirplane } from './character_states/vehicles/ExitingAirplane';
+import { Idle } from './character_states/Idle'
+import { EnteringVehicle } from './character_states/vehicles/EnteringVehicle'
+import { ExitingVehicle } from './character_states/vehicles/ExitingVehicle'
+import { OpenVehicleDoor as OpenVehicleDoor } from './character_states/vehicles/OpenVehicleDoor'
+import { Driving } from './character_states/vehicles/Driving'
+import { ExitingAirplane } from './character_states/vehicles/ExitingAirplane'
 import { ICharacterAI } from '../interfaces/ICharacterAI'
 import { World } from '../world/World'
 import { IControllable } from '../interfaces/IControllable'
 import { ICharacterState } from '../interfaces/ICharacterState'
 import { IWorldEntity } from '../interfaces/IWorldEntity'
-// sepinaco commented
-// import { VehicleSeat } from '../vehicles/VehicleSeat';
-// import { Vehicle } from '../vehicles/Vehicle';
+import { VehicleSeat } from '../vehicles/VehicleSeat'
+import { Vehicle } from '../vehicles/Vehicle'
 import { CollisionGroups } from '../enums/CollisionGroups'
 import { CapsuleCollider } from '../physics/colliders/CapsuleCollider'
-// sepinaco commented
-// import { VehicleEntryInstance } from './VehicleEntryInstance';
+import { VehicleEntryInstance } from './VehicleEntryInstance'
 import { SeatType } from '../enums/SeatType'
 import { GroundImpactData } from './GroundImpactData'
 // sepinaco commented
-// import { ClosestObjectFinder } from '../core/ClosestObjectFinder';
+import { ClosestObjectFinder } from '../core/ClosestObjectFinder'
 import { Object3D } from 'three'
 import { EntityType } from '../enums/EntityType'
-import { VehicleSeat } from '../vehicles/VehicleSeat'
-import { VehicleEntryInstance } from './VehicleEntryInstance'
 
 export class Character extends THREE.Object3D implements IWorldEntity {
     public updateOrder: number = 1
@@ -83,7 +78,6 @@ export class Character extends THREE.Object3D implements IWorldEntity {
 
     // Vehicles
     public controlledObject?: IControllable
-    // sepinaco commented
     public occupyingSeat: VehicleSeat | null = null
     public vehicleEntryInstance: VehicleEntryInstance | null = null
 
@@ -179,7 +173,7 @@ export class Character extends THREE.Object3D implements IWorldEntity {
 
         // States
         // sepinaco commented
-        // this.setState(new Idle(this))
+        this.setState(new Idle(this))
     }
 
     public setAnimations(animations: []): void {
