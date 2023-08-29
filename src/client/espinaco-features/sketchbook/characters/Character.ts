@@ -345,8 +345,7 @@ export class Character extends THREE.Object3D implements IWorldEntity {
         if (this.controlledObject !== undefined) {
             this.controlledObject.handleMouseMove(event, deltaX, deltaY)
         } else {
-            // sepinaco commented
-            // this.world.cameraOperator.move(deltaX, deltaY)
+            this.world?.cameraOperator?.move(deltaX, deltaY)
         }
     }
 
@@ -354,8 +353,7 @@ export class Character extends THREE.Object3D implements IWorldEntity {
         if (this.controlledObject !== undefined) {
             this.controlledObject.handleMouseWheel(event, value)
         } else {
-            // sepinaco commented
-            // this.world.scrollTheTimeScale(value)
+            this.world?.scrollTheTimeScale(value)
         }
     }
 
@@ -376,8 +374,7 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             else action.justReleased = true
 
             // Tell player to handle states according to new input
-            // sepinaco commented
-            // this.charState.onInputChange()
+            this.charState?.onInputChange()
 
             // Reset the 'just' attributes
             action.justPressed = false
@@ -386,9 +383,9 @@ export class Character extends THREE.Object3D implements IWorldEntity {
     }
 
     public takeControl(): void {
-        if (this.world !== undefined) {
+        if (this.world?.inputManager !== undefined) {
             // sepinaco commented
-            // this.world.inputManager.setInputReceiver(this)
+            this.world.inputManager.setInputReceiver(this)
         } else {
             console.warn(
                 "Attempting to take control of a character that doesn't belong to a world."
