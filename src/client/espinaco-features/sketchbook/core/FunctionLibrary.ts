@@ -17,6 +17,7 @@ export function createCapsuleGeometry(
     const PID2 = 1.570796326794896619231322
 
     const normals = []
+    const vertices = []
 
     // top cap
     for (let i = 0; i <= N / 4; i++) {
@@ -34,6 +35,11 @@ export function createCapsuleGeometry(
             normal.z = vertex.z
             // sepinaco commeted
             // geometry.vertices.push(vertex)
+            // sepinaco sustituye por
+            vertices.push(vertex.x)
+            vertices.push(vertex.y)
+            vertices.push(vertex.z)
+
             normals.push(normal)
         }
     }
@@ -54,9 +60,21 @@ export function createCapsuleGeometry(
             normal.z = vertex.z
             // sepinaco commeted
             // geometry.vertices.push(vertex)
+            // sepinaco sustituye por
+            vertices.push(vertex.x)
+            vertices.push(vertex.y)
+            vertices.push(vertex.z)
             normals.push(normal)
         }
     }
+
+    // sepinaco code
+    geometry.setAttribute(
+        'position',
+        new THREE.BufferAttribute(new Float32Array([...vertices]), 3)
+    )
+    // specify triangles, as triplets of indexes into the vertex list.
+    geometry.setIndex(new THREE.BufferAttribute([0, 1, 2], 1))
 
     // sepinaco commented (va a haber que hacerlo de otra forma porque THREE.Face3 es de THREEGeometry que ya esta deprecado)
     // for (let i = 0; i <= N / 2; i++) {
@@ -100,7 +118,7 @@ export function createCapsuleGeometry(
     //             geometry.faces.push(face2)
     //         }
     //     }
-    //     // if(i==(N/4)) break; // N/4 is when the center segments are solved
+    // if(i==(N/4)) break; // N/4 is when the center segments are solved
     // }
 
     geometry.rotateX(Math.PI / 2)
