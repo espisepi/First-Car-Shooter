@@ -350,9 +350,8 @@ export class World {
     }
 
     public setTimeScale(value: number): void {
-        // sepinaco commented
-        // this.params.Time_Scale = value
-        // this.timeScaleTarget = value
+        this.params.Time_Scale = value
+        this.timeScaleTarget = value
     }
 
     public add(worldEntity: IWorldEntity): void {
