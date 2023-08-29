@@ -24,7 +24,6 @@ import { CapsuleCollider } from '../physics/colliders/CapsuleCollider'
 import { VehicleEntryInstance } from './VehicleEntryInstance'
 import { SeatType } from '../enums/SeatType'
 import { GroundImpactData } from './GroundImpactData'
-// sepinaco commented
 import { ClosestObjectFinder } from '../core/ClosestObjectFinder'
 import { Object3D } from 'three'
 import { EntityType } from '../enums/EntityType'
@@ -164,15 +163,21 @@ export class Character extends THREE.Object3D implements IWorldEntity {
 
         // Physics pre/post step callback bindings
         // sepinaco commented
+        // Se calculan a la hora de instanciar this.world = world mas abajo del codigo
+        // preStep and postStep deprecated: https://github.com/schteppe/cannon.js/releases
         // this.characterCapsule.body.preStep = (body: CANNON.Body) => {
         //     this.physicsPreStep(body, this)
         // }
         // this.characterCapsule.body.postStep = (body: CANNON.Body) => {
         //     this.physicsPostStep(body, this)
         // }
+        // Asignar la función al evento preStep
+        // this.characterCapsule.body.addEventListener('preStep', (event: any) => {
+        //     console.log('oyeeee', event)
+        //     // this.physicsPreStep(this.characterCapsule, this)
+        // })
 
         // States
-        // sepinaco commented
         this.setState(new Idle(this))
     }
 
@@ -998,6 +1003,25 @@ export class Character extends THREE.Object3D implements IWorldEntity {
         } else {
             // Set world
             this.world = world
+
+            // Aqui haremos los calculos de preStep y postStep
+            // sepinaco buen code debido al fucking deprecated de preStep y postStep
+            console.log({ worldsito: this.world?.physicsWorld })
+            const self = this
+            const body = this.characterCapsule.body
+            this.world?.physicsWorld.addEventListener(
+                'preStep',
+                function (event: any) {
+                    self.physicsPreStep(body, self)
+                }
+            )
+
+            this.world?.physicsWorld.addEventListener(
+                'postStep',
+                function (event: any) {
+                    self.physicsPreStep(body, self)
+                }
+            )
 
             // Register character
             world.characters.push(this)
