@@ -261,12 +261,11 @@ export class Character extends THREE.Object3D implements IWorldEntity {
     public setPhysicsEnabled(value: boolean): void {
         this.physicsEnabled = value
 
-        // sepinaco commented
-        // if (value === true) {
-        //     this.world.physicsWorld.addBody(this.characterCapsule.body)
-        // } else {
-        //     this.world.physicsWorld.remove(this.characterCapsule.body)
-        // }
+        if (value === true) {
+            this.world?.physicsWorld.addBody(this.characterCapsule.body)
+        } else {
+            this.world?.physicsWorld.removeBody(this.characterCapsule.body)
+        }
     }
 
     public readCharacterData(gltf: any): void {
