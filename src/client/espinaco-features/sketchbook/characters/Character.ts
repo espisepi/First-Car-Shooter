@@ -402,11 +402,10 @@ export class Character extends THREE.Object3D implements IWorldEntity {
     }
 
     public update(timeStep: number): void {
-        // sepinaco commented
-        // this.behaviour?.update(timeStep)
-        // this.vehicleEntryInstance?.update(timeStep)
-        // // console.log(this.occupyingSeat);
-        // this.charState?.update(timeStep)
+        this.behaviour?.update(timeStep)
+        this.vehicleEntryInstance?.update(timeStep)
+        // console.log(this.occupyingSeat);
+        this.charState?.update(timeStep)
 
         // this.visuals.position.copy(this.modelOffset);
         if (this.physicsEnabled) this.springMovement(timeStep)
@@ -440,10 +439,12 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             return
         }
 
-        // sepinaco commented
-        // this.world.cameraOperator.setRadius(1.6, true)
-        // this.world.cameraOperator.followMode = false
-        // this.world.dirLight.target = this;
+        if (this.world?.cameraOperator) {
+            this.world.cameraOperator.setRadius(1.6, true)
+            this.world.cameraOperator.followMode = false
+        }
+
+        // this.world.dirLight.target = this
 
         this.displayControls()
     }
