@@ -90,6 +90,8 @@ export class World {
 
     private lastScenarioID: string = 'lastScenarioID undefined'
 
+    public loadingManager?: LoadingManager
+
     constructor(
         scene: THREE.Scene,
         camera: THREE.PerspectiveCamera,
@@ -214,6 +216,7 @@ export class World {
         // Load scene if path is supplied
         if (worldScenePath !== undefined) {
             let loadingManager = new LoadingManager(this)
+            this.loadingManager = loadingManager
             loadingManager.onFinishedCallback = () => {
                 this.update(1, 1)
                 this.setTimeScale(1)
@@ -524,6 +527,19 @@ export class World {
                 this.timeScaleTarget = timeScaleBottomLimit
             this.timeScaleTarget = Math.min(this.timeScaleTarget, 1)
         }
+    }
+
+    public spawnNewPlayerCharacter() {
+        this.loadingManager?.loadGLTF('build/assets/boxman.glb', (model) => {
+            let player = new Character(model)
+            // let worldPos = new THREE.Vector3()
+            // this.object.getWorldPosition(worldPos)
+            // player.setPosition(worldPos.x, worldPos.y, worldPos.z)
+            // let forward = Utils.getForward(this.object)
+            // player.setOrientation(forward, true)
+            this.add(player)
+            // player.takeControl()
+        })
     }
 
     public updateControls(controls: any): void {
