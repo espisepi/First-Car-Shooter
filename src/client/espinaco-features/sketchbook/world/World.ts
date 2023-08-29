@@ -441,16 +441,16 @@ export class World {
         })
         this.graphicsWorld.add(gltf.scene)
 
-        //     // Launch default scenario
-        //     let defaultScenarioID: string
-        //     for (const scenario of this.scenarios) {
-        //         if (scenario.default) {
-        //             defaultScenarioID = scenario.id
-        //             break
-        //         }
-        //     }
-        //     if (defaultScenarioID !== undefined)
-        //         this.launchScenario(defaultScenarioID, loadingManager)
+        // Launch default scenario
+        let defaultScenarioID: string | undefined
+        for (const scenario of this.scenarios) {
+            if (scenario.default) {
+                defaultScenarioID = scenario.id
+                break
+            }
+        }
+        if (defaultScenarioID !== undefined)
+            this.launchScenario(defaultScenarioID, loadingManager)
     }
 
     public launchScenario(
