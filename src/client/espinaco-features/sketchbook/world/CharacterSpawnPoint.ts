@@ -14,16 +14,14 @@ export class CharacterSpawnPoint implements ISpawnPoint {
 
     public spawn(loadingManager: LoadingManager, world: World): void {
         loadingManager.loadGLTF('build/assets/boxman.glb', (model) => {
-            console.log({ model })
-            // Da error el codigo de abajo :( (es cuando se crea el Object3D del character porque no se parsea bien)
             let player = new Character(model)
-            // let worldPos = new THREE.Vector3()
-            // this.object.getWorldPosition(worldPos)
-            // player.setPosition(worldPos.x, worldPos.y, worldPos.z)
-            // let forward = Utils.getForward(this.object)
-            // player.setOrientation(forward, true)
-            // world.add(player)
-            // player.takeControl()
+            let worldPos = new THREE.Vector3()
+            this.object.getWorldPosition(worldPos)
+            player.setPosition(worldPos.x, worldPos.y, worldPos.z)
+            let forward = Utils.getForward(this.object)
+            player.setOrientation(forward, true)
+            world.add(player)
+            player.takeControl()
         })
     }
 }
