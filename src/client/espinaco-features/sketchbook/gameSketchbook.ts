@@ -88,6 +88,7 @@ export default class GameSketchbook /* extends Game */ {
 
                 this.updateInterval = setInterval(() => {
                     if (this.world.characters[0]) {
+                        // sepinaco TODO: Siguiente paso cambiar los datas que se envian y actualizar sus posiciones, fisicas y animaciones correctamente
                         this.socket.emit('update', {
                             t: Date.now(),
                             // p: this.car.frameMesh.position,
