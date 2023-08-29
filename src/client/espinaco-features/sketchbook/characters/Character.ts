@@ -1018,7 +1018,7 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             this.world?.physicsWorld.addEventListener(
                 'postStep',
                 function (event: any) {
-                    self.physicsPreStep(body, self)
+                    self.physicsPostStep(body, self)
                 }
             )
 
