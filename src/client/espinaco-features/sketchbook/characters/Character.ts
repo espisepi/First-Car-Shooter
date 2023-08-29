@@ -698,62 +698,60 @@ export class Character extends THREE.Object3D implements IWorldEntity {
         vehicle: IControllable,
         seat: VehicleSeat
     ): void {
-        // sepinaco commented
-        // if (this.controlledObject !== vehicle) {
-        //     this.transferControls(vehicle)
-        //     this.resetControls()
-        //     this.controlledObject = vehicle
-        //     this.controlledObject.allowSleep(false)
-        //     vehicle.inputReceiverInit()
-        //     vehicle.controllingCharacter = this
-        // }
+        if (this.controlledObject !== vehicle) {
+            this.transferControls(vehicle)
+            this.resetControls()
+            this.controlledObject = vehicle
+            this.controlledObject.allowSleep(false)
+            vehicle.inputReceiverInit()
+            vehicle.controllingCharacter = this
+        }
     }
 
-    // public transferControls(entity: IControllable): void {
-    //     // Currently running through all actions of this character and the vehicle,
-    //     // comparing keycodes of actions and based on that triggering vehicle's actions
-    //     // Maybe we should ask input manager what's the current state of the keyboard
-    //     // and read those values... TODO
-    //     for (const action1 in this.actions) {
-    //         if (this.actions.hasOwnProperty(action1)) {
-    //             for (const action2 in entity.actions) {
-    //                 if (entity.actions.hasOwnProperty(action2)) {
-    //                     let a1 = this.actions[action1]
-    //                     let a2 = entity.actions[action2]
+    public transferControls(entity: IControllable): void {
+        // Currently running through all actions of this character and the vehicle,
+        // comparing keycodes of actions and based on that triggering vehicle's actions
+        // Maybe we should ask input manager what's the current state of the keyboard
+        // and read those values... TODO
+        for (const action1 in this.actions) {
+            if (this.actions.hasOwnProperty(action1)) {
+                for (const action2 in entity.actions) {
+                    if (entity.actions.hasOwnProperty(action2)) {
+                        let a1 = this.actions[action1]
+                        let a2 = entity.actions[action2]
 
-    //                     a1.eventCodes.forEach((code1) => {
-    //                         a2.eventCodes.forEach((code2) => {
-    //                             if (code1 === code2) {
-    //                                 entity.triggerAction(action2, a1.isPressed)
-    //                             }
-    //                         })
-    //                     })
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+                        a1.eventCodes.forEach((code1) => {
+                            a2.eventCodes.forEach((code2) => {
+                                if (code1 === code2) {
+                                    entity.triggerAction(action2, a1.isPressed)
+                                }
+                            })
+                        })
+                    }
+                }
+            }
+        }
+    }
 
-    // public stopControllingVehicle(): void {
-    //     if (this.controlledObject?.controllingCharacter === this) {
-    //         this.controlledObject.allowSleep(true)
-    //         this.controlledObject.controllingCharacter = undefined
-    //         this.controlledObject.resetControls()
-    //         this.controlledObject = undefined
-    //         this.inputReceiverInit()
-    //     }
-    // }
+    public stopControllingVehicle(): void {
+        if (this.controlledObject?.controllingCharacter === this) {
+            this.controlledObject.allowSleep(true)
+            this.controlledObject.controllingCharacter = undefined
+            this.controlledObject.resetControls()
+            this.controlledObject = undefined
+            this.inputReceiverInit()
+        }
+    }
 
     public exitVehicle(): void {
-        // sepinaco commented
-        // if (this.occupyingSeat !== null) {
-        //     if (this.occupyingSeat.vehicle.entityType === EntityType.Airplane) {
-        //         this.setState(new ExitingAirplane(this, this.occupyingSeat))
-        //     } else {
-        //         this.setState(new ExitingVehicle(this, this.occupyingSeat))
-        //     }
-        //     this.stopControllingVehicle()
-        // }
+        if (this.occupyingSeat !== null) {
+            if (this.occupyingSeat.vehicle.entityType === EntityType.Airplane) {
+                this.setState(new ExitingAirplane(this, this.occupyingSeat))
+            } else {
+                this.setState(new ExitingVehicle(this, this.occupyingSeat))
+            }
+            this.stopControllingVehicle()
+        }
     }
 
     public occupySeat(seat: VehicleSeat): void {
