@@ -468,14 +468,14 @@ export class World {
         }
     }
 
-    // public restartScenario(): void {
-    //     if (this.lastScenarioID !== undefined) {
-    //         document.exitPointerLock()
-    //         this.launchScenario(this.lastScenarioID)
-    //     } else {
-    //         console.warn("Can't restart scenario. Last scenarioID is undefined.")
-    //     }
-    // }
+    public restartScenario(): void {
+        if (this.lastScenarioID !== undefined) {
+            document.exitPointerLock()
+            this.launchScenario(this.lastScenarioID)
+        } else {
+            console.warn("Can't restart scenario. Last scenarioID is undefined.")
+        }
+    }
 
     public clearEntities(): void {
         for (let i = 0; i < this.characters.length; i++) {
