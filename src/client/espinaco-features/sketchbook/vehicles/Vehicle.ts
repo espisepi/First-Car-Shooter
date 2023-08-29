@@ -120,27 +120,28 @@ export abstract class Vehicle extends THREE.Object3D implements IWorldEntity {
     }
 
     public forceCharacterOut(): void {
-        // sepinaco commented
-        // this.controllingCharacter.modelContainer.visible = true
-        // this.controllingCharacter.exitVehicle()
+        if (this.controllingCharacter) {
+            this.controllingCharacter.modelContainer.visible = true
+            this.controllingCharacter.exitVehicle()
+        }
     }
 
     public onInputChange(): void {
-        // sepinaco commented
-        // if (
-        //     this.actions.seat_switch.justPressed &&
-        //     this.controllingCharacter?.occupyingSeat?.connectedSeats.length > 0
-        // ) {
-        //     this.controllingCharacter.modelContainer.visible = true
-        //     this.controllingCharacter.setState(
-        //         new SwitchingSeats(
-        //             this.controllingCharacter,
-        //             this.controllingCharacter.occupyingSeat,
-        //             this.controllingCharacter.occupyingSeat.connectedSeats[0]
-        //         )
-        //     )
-        //     this.controllingCharacter.stopControllingVehicle()
-        // }
+        if (
+            this.actions.seat_switch.justPressed &&
+            this.controllingCharacter?.occupyingSeat?.connectedSeats &&
+            this.controllingCharacter?.occupyingSeat?.connectedSeats.length > 0
+        ) {
+            this.controllingCharacter.modelContainer.visible = true
+            this.controllingCharacter.setState(
+                new SwitchingSeats(
+                    this.controllingCharacter,
+                    this.controllingCharacter.occupyingSeat,
+                    this.controllingCharacter.occupyingSeat.connectedSeats[0]
+                )
+            )
+            this.controllingCharacter.stopControllingVehicle()
+        }
     }
 
     public resetControls(): void {
@@ -165,35 +166,36 @@ export abstract class Vehicle extends THREE.Object3D implements IWorldEntity {
         pressed: boolean
     ): void {
         // Free camera
-        // sepinaco commented
-        // if (code === 'KeyC' && pressed === true && event.shiftKey === true) {
-        //     this.resetControls()
-        //     this.world.cameraOperator.characterCaller = this.controllingCharacter
-        //     this.world.inputManager.setInputReceiver(this.world.cameraOperator)
-        // } else if (code === 'KeyR' && pressed === true && event.shiftKey === true) {
-        //     this.world.restartScenario()
-        // } else {
-        //     for (const action in this.actions) {
-        //         if (this.actions.hasOwnProperty(action)) {
-        //             const binding = this.actions[action]
-        //             if (_.includes(binding.eventCodes, code)) {
-        //                 this.triggerAction(action, pressed)
-        //             }
-        //         }
-        //     }
-        // }
+        if (code === 'KeyC' && pressed === true && event.shiftKey === true) {
+            this.resetControls()
+            if (this.world?.cameraOperator) {
+                this.world.cameraOperator.characterCaller =
+                    this.controllingCharacter
+                this.world.inputManager?.setInputReceiver(this.world.cameraOperator)
+            }
+        } else if (code === 'KeyR' && pressed === true && event.shiftKey === true) {
+            this.world?.restartScenario()
+        } else {
+            for (const action in this.actions) {
+                if (this.actions.hasOwnProperty(action)) {
+                    const binding = this.actions[action]
+                    if (_.includes(binding.eventCodes, code)) {
+                        this.triggerAction(action, pressed)
+                    }
+                }
+            }
+        }
     }
 
     public setFirstPersonView(value: boolean): void {
-        // sepinaco commented
-        // this.firstPerson = value
-        // if (this.controllingCharacter !== undefined)
-        //     this.controllingCharacter.modelContainer.visible = !value
-        // if (value) {
-        //     this.world.cameraOperator.setRadius(0, true)
-        // } else {
-        //     this.world.cameraOperator.setRadius(3, true)
-        // }
+        this.firstPerson = value
+        if (this.controllingCharacter !== undefined)
+            this.controllingCharacter.modelContainer.visible = !value
+        if (value) {
+            this.world?.cameraOperator?.setRadius(0, true)
+        } else {
+            this.world?.cameraOperator?.setRadius(3, true)
+        }
     }
 
     public toggleFirstPersonView(): void {
