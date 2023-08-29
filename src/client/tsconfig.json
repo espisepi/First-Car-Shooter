@@ -4,7 +4,9 @@
             "three/examples/jsm/libs/tween.module.min": ["../typings/tween.js"]
         },
         "moduleResolution": "node",
-        "strict": true
+        "strict": true,
+        "module": "commonjs",
+        "target": "es5"
     },
     "include": ["**/*.ts"]
 }

@@ -31,6 +31,8 @@ import { GroundImpactData } from './GroundImpactData'
 // import { ClosestObjectFinder } from '../core/ClosestObjectFinder';
 import { Object3D } from 'three'
 import { EntityType } from '../enums/EntityType'
+import { VehicleSeat } from '../vehicles/VehicleSeat'
+import { VehicleEntryInstance } from './VehicleEntryInstance'
 
 export class Character extends THREE.Object3D implements IWorldEntity {
     public updateOrder: number = 1
@@ -76,14 +78,14 @@ export class Character extends THREE.Object3D implements IWorldEntity {
 
     public world?: World
     // sepinaco commented
-    // public charState: ICharacterState
-    // public behaviour: ICharacterAI
+    public charState?: ICharacterState
+    public behaviour?: ICharacterAI
 
     // Vehicles
     public controlledObject?: IControllable
     // sepinaco commented
-    // public occupyingSeat: VehicleSeat = null
-    // public vehicleEntryInstance: VehicleEntryInstance = null
+    public occupyingSeat: VehicleSeat | null = null
+    public vehicleEntryInstance: VehicleEntryInstance | null = null
 
     private physicsEnabled: boolean = true
 
@@ -671,16 +673,16 @@ export class Character extends THREE.Object3D implements IWorldEntity {
         // }
     }
 
-    // sepinaco commented
-    // public enterVehicle(seat: VehicleSeat, entryPoint: THREE.Object3D): void {
-    //     this.resetControls()
+    public enterVehicle(seat: VehicleSeat, entryPoint: THREE.Object3D): void {
+        this.resetControls()
 
-    //     if (seat.door?.rotation < 0.5) {
-    //         this.setState(new OpenVehicleDoor(this, seat, entryPoint))
-    //     } else {
-    //         this.setState(new EnteringVehicle(this, seat, entryPoint))
-    //     }
-    // }
+        // sepinaco commented
+        // if (seat.door?.rotation < 0.5) {
+        //     this.setState(new OpenVehicleDoor(this, seat, entryPoint))
+        // } else {
+        //     this.setState(new EnteringVehicle(this, seat, entryPoint))
+        // }
+    }
 
     // sepinaco commented
     // public teleportToVehicle(vehicle: Vehicle, seat: VehicleSeat): void {
@@ -702,21 +704,20 @@ export class Character extends THREE.Object3D implements IWorldEntity {
     //     this.startControllingVehicle(vehicle, seat)
     // }
 
-    // public startControllingVehicle(
-    //     vehicle: IControllable,
-    //     seat: VehicleSeat
-    // ): void {
-    //     if (this.controlledObject !== vehicle) {
-    //         this.transferControls(vehicle)
-    //         this.resetControls()
-
-    //         this.controlledObject = vehicle
-    //         this.controlledObject.allowSleep(false)
-    //         vehicle.inputReceiverInit()
-
-    //         vehicle.controllingCharacter = this
-    //     }
-    // }
+    public startControllingVehicle(
+        vehicle: IControllable,
+        seat: VehicleSeat
+    ): void {
+        // sepinaco commented
+        // if (this.controlledObject !== vehicle) {
+        //     this.transferControls(vehicle)
+        //     this.resetControls()
+        //     this.controlledObject = vehicle
+        //     this.controlledObject.allowSleep(false)
+        //     vehicle.inputReceiverInit()
+        //     vehicle.controllingCharacter = this
+        // }
+    }
 
     // public transferControls(entity: IControllable): void {
     //     // Currently running through all actions of this character and the vehicle,
@@ -753,29 +754,29 @@ export class Character extends THREE.Object3D implements IWorldEntity {
     //     }
     // }
 
-    // public exitVehicle(): void {
-    //     if (this.occupyingSeat !== null) {
-    //         if (this.occupyingSeat.vehicle.entityType === EntityType.Airplane) {
-    //             this.setState(new ExitingAirplane(this, this.occupyingSeat))
-    //         } else {
-    //             this.setState(new ExitingVehicle(this, this.occupyingSeat))
-    //         }
+    public exitVehicle(): void {
+        // sepinaco commented
+        // if (this.occupyingSeat !== null) {
+        //     if (this.occupyingSeat.vehicle.entityType === EntityType.Airplane) {
+        //         this.setState(new ExitingAirplane(this, this.occupyingSeat))
+        //     } else {
+        //         this.setState(new ExitingVehicle(this, this.occupyingSeat))
+        //     }
+        //     this.stopControllingVehicle()
+        // }
+    }
 
-    //         this.stopControllingVehicle()
-    //     }
-    // }
+    public occupySeat(seat: VehicleSeat): void {
+        this.occupyingSeat = seat
+        seat.occupiedBy = this
+    }
 
-    // public occupySeat(seat: VehicleSeat): void {
-    //     this.occupyingSeat = seat
-    //     seat.occupiedBy = this
-    // }
-
-    // public leaveSeat(): void {
-    //     if (this.occupyingSeat !== null) {
-    //         this.occupyingSeat.occupiedBy = null
-    //         this.occupyingSeat = null
-    //     }
-    // }
+    public leaveSeat(): void {
+        if (this.occupyingSeat !== null) {
+            this.occupyingSeat.occupiedBy = null
+            this.occupyingSeat = null
+        }
+    }
 
     public physicsPreStep(body: CANNON.Body, character: Character): void {
         character.feetRaycast()

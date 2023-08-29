@@ -33,6 +33,7 @@ import { Scenario } from './Scenario'
 // import { IUpdatable } from '../interfaces/IUpdatable'
 import { Character } from '../characters/Character'
 import { InputManager } from '../core/InputManager'
+import { Vehicle } from '../vehicles/Vehicle'
 // import { Path } from './Path'
 // import { CollisionGroups } from '../enums/CollisionGroups'
 // import { BoxCollider } from '../physics/colliders/BoxCollider'
@@ -78,7 +79,7 @@ export class World {
     // public cannonDebugRenderer: CannonDebugRenderer
     public scenarios: Scenario[] = []
     public characters: Character[] = []
-    // public vehicles: Vehicle[] = []
+    public vehicles: Vehicle[] = []
     public paths: Path[] = []
     // public scenarioGUIFolder: any
     public updatables: IUpdatable[] = []
