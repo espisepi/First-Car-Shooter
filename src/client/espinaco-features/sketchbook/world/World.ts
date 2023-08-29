@@ -71,7 +71,7 @@ export class World {
         Time_Scale: 1,
         Shadows: true,
         FXAA: true,
-        Debug_Physics: false,
+        Debug_Physics: true,
         Debug_FPS: false,
         Sun_Elevation: 50,
         Sun_Rotation: 145,
@@ -243,6 +243,16 @@ export class World {
             //     buttonsStyling: false,
             // })
         }
+
+        // sepinaco code
+        this.cannonDebugRenderer = new CannonDebugRenderer(
+            this.graphicsWorld,
+            this.physicsWorld
+        )
+        // if (this.params.Debug_Physics) {
+        //     this.cannonDebugRenderer.clearMeshes()
+        //     this.cannonDebugRenderer = undefined
+        // }
 
         this.render(this)
     }
