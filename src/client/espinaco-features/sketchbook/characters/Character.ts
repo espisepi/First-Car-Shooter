@@ -483,12 +483,15 @@ export class Character extends THREE.Object3D implements IWorldEntity {
             this.controlledObject.inputReceiverUpdate(timeStep)
         } else {
             // Look in camera's direction
-            // sepinaco commented
-            // this.viewVector = new THREE.Vector3().subVectors(
-            //     this.position,
-            //     this.world.camera.position
-            // )
-            // this.getWorldPosition(this.world.cameraOperator.target)
+            if (this.world) {
+                this.viewVector = new THREE.Vector3().subVectors(
+                    this.position,
+                    this.world.camera.position
+                )
+            }
+            if (this.world?.cameraOperator) {
+                this.getWorldPosition(this.world.cameraOperator.target)
+            }
         }
     }
 
