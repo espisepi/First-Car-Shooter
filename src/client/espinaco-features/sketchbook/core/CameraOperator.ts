@@ -3,8 +3,7 @@ import * as Utils from './FunctionLibrary'
 import { World } from '../world/World'
 import { IInputReceiver } from '../interfaces/IInputReceiver'
 import { KeyBinding } from './KeyBinding'
-// sepinaco commented
-// import { Character } from '../characters/Character';
+import { Character } from '../characters/Character'
 import * as _ from 'lodash'
 // import _ = require('lodash')
 import { IUpdatable } from '../interfaces/IUpdatable'
@@ -34,7 +33,7 @@ export class CameraOperator implements IInputReceiver, IUpdatable {
     public followMode: boolean = false
 
     // sepinaco commented
-    // public characterCaller: Character
+    public characterCaller?: Character
 
     constructor(
         world: World,
