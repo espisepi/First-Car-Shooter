@@ -34,6 +34,7 @@ import { Scenario } from './Scenario'
 import { Character } from '../characters/Character'
 import { InputManager } from '../core/InputManager'
 import { Vehicle } from '../vehicles/Vehicle'
+import CannonDebugRenderer from '../../../utils/cannonDebugRenderer'
 // import { Path } from './Path'
 // import { CollisionGroups } from '../enums/CollisionGroups'
 // import { BoxCollider } from '../physics/colliders/BoxCollider'
@@ -76,7 +77,7 @@ export class World {
     public cameraOperator?: CameraOperator
     public timeScaleTarget: number = 1
     // public console: InfoStack
-    // public cannonDebugRenderer: CannonDebugRenderer
+    public cannonDebugRenderer?: CannonDebugRenderer
     public scenarios: Scenario[] = []
     public characters: Character[] = []
     public vehicles: Vehicle[] = []
@@ -165,7 +166,7 @@ export class World {
         this.physicsWorld = new CANNON.World()
         this.physicsWorld.gravity.set(0, -9.81, 0)
         this.physicsWorld.broadphase = new CANNON.SAPBroadphase(this.physicsWorld)
-        // sepinaco commented
+        // sepinaco commented (a ver como lo sustituimos ya que esta deprecado)
         // this.physicsWorld.solver.iterations = 10
         this.physicsWorld.allowSleep = true
 
@@ -251,8 +252,7 @@ export class World {
         )
 
         // Physics debug
-        // sepinaco commented
-        // if (this.params.Debug_Physics) this.cannonDebugRenderer.update()
+        if (this.params.Debug_Physics) this.cannonDebugRenderer?.update()
     }
 
     public updatePhysics(timeStep: number): void {
