@@ -568,15 +568,14 @@ export class Character extends THREE.Object3D implements IWorldEntity {
     }
 
     public setCameraRelativeOrientationTarget(): void {
-        // sepinaco commented
-        // if (this.vehicleEntryInstance === null) {
-        //     let moveVector = this.getCameraRelativeMovementVector()
-        //     if (moveVector.x === 0 && moveVector.y === 0 && moveVector.z === 0) {
-        //         this.setOrientation(this.orientation)
-        //     } else {
-        //         this.setOrientation(moveVector)
-        //     }
-        // }
+        if (this.vehicleEntryInstance === null) {
+            let moveVector = this.getCameraRelativeMovementVector()
+            if (moveVector.x === 0 && moveVector.y === 0 && moveVector.z === 0) {
+                this.setOrientation(this.orientation)
+            } else {
+                this.setOrientation(moveVector)
+            }
+        }
     }
 
     public rotateModel(): void {
