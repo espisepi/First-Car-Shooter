@@ -11,6 +11,7 @@ export default class GameSketchbook extends Game {
         listener: THREE.AudioListener,
         labelRenderer: CSS2DRenderer
     ) {
+        // Run Game Firt car Shooter (with extends Game)
         super(scene, camera, renderer, listener, labelRenderer)
 
         // Los console.log del client se miran en el navegador
@@ -21,5 +22,9 @@ export default class GameSketchbook extends Game {
 
     private init(): void {
         const world = new Sketchbook.World('build/assets/world.glb')
+    }
+
+    public update(delta: number) {
+        super.update(delta)
     }
 }

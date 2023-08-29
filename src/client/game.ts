@@ -331,7 +331,7 @@ export default class Game {
         })
     }
 
-    update = (delta: number) => {
+    public update(delta: number) {
         this.physics.world.step(delta)
 
         //this.cannonDebugRenderer.update()
