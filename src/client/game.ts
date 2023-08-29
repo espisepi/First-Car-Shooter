@@ -45,6 +45,7 @@ export default class Game {
         listener: THREE.AudioListener,
         labelRenderer: CSS2DRenderer
     ) {
+        console.log('Game por defecto First Shooter Car run! :) ============')
         if (
             /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
                 navigator.userAgent
