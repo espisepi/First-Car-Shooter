@@ -1,8 +1,7 @@
 import * as THREE from 'three'
 import * as CANNON from 'cannon-es'
 import * as _ from 'lodash'
-// sepinaco commeted
-// import { SimulationFrame } from '../physics/spring_simulation/SimulationFrame';
+import { SimulationFrame } from '../physics/spring_simulation/SimulationFrame'
 import { World } from '../world/World'
 import { Side } from '../enums/Side'
 import { Object3D } from 'three'
@@ -223,23 +222,22 @@ export function getGlobalProperties(prefix: string = ''): any[] {
     return keyValues // build the string
 }
 
-// sepinaco commented
-// export function spring(
-//     source: number,
-//     dest: number,
-//     velocity: number,
-//     mass: number,
-//     damping: number
-// ): SimulationFrame {
-//     let acceleration = dest - source
-//     acceleration /= mass
-//     velocity += acceleration
-//     velocity *= damping
+export function spring(
+    source: number,
+    dest: number,
+    velocity: number,
+    mass: number,
+    damping: number
+): SimulationFrame {
+    let acceleration = dest - source
+    acceleration /= mass
+    velocity += acceleration
+    velocity *= damping
 
-//     let position = source + velocity
+    let position = source + velocity
 
-//     return new SimulationFrame(position, velocity)
-// }
+    return new SimulationFrame(position, velocity)
+}
 
 export function springV(
     source: THREE.Vector3,

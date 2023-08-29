@@ -31,7 +31,8 @@ import { Scenario } from './Scenario'
 // import { UIManager } from '../core/UIManager'
 // import { IWorldEntity } from '../interfaces/IWorldEntity'
 // import { IUpdatable } from '../interfaces/IUpdatable'
-// import { Character } from '../characters/Character'
+import { Character } from '../characters/Character'
+import { InputManager } from '../core/InputManager'
 // import { Path } from './Path'
 // import { CollisionGroups } from '../enums/CollisionGroups'
 // import { BoxCollider } from '../physics/colliders/BoxCollider'
@@ -70,13 +71,13 @@ export class World {
         Sun_Elevation: 50,
         Sun_Rotation: 145,
     }
-    // public inputManager: InputManager
+    public inputManager?: InputManager
     public cameraOperator?: CameraOperator
     public timeScaleTarget: number = 1
     // public console: InfoStack
     // public cannonDebugRenderer: CannonDebugRenderer
     public scenarios: Scenario[] = []
-    // public characters: Character[] = []
+    public characters: Character[] = []
     // public vehicles: Vehicle[] = []
     public paths: Path[] = []
     // public scenarioGUIFolder: any
