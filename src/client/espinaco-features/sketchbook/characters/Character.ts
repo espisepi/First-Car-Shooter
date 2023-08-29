@@ -605,97 +605,94 @@ export class Character extends THREE.Object3D implements IWorldEntity {
         let worldPos = new THREE.Vector3()
 
         // Find best vehicle
-        // sepinaco commented
-        // let vehicleFinder = new ClosestObjectFinder<Vehicle>(this.position, 10)
-        // this.world.vehicles.forEach((vehicle) => {
-        //     vehicleFinder.consider(vehicle, vehicle.position)
-        // })
+        let vehicleFinder = new ClosestObjectFinder<Vehicle>(this.position, 10)
+        this.world?.vehicles.forEach((vehicle) => {
+            vehicleFinder.consider(vehicle, vehicle.position)
+        })
 
-        // if (vehicleFinder.closestObject !== undefined) {
-        //     let vehicle = vehicleFinder.closestObject
-        //     let vehicleEntryInstance = new VehicleEntryInstance(this)
-        //     vehicleEntryInstance.wantsToDrive = wantsToDrive
+        if (vehicleFinder.closestObject !== undefined) {
+            let vehicle = vehicleFinder.closestObject
+            let vehicleEntryInstance = new VehicleEntryInstance(this)
+            vehicleEntryInstance.wantsToDrive = wantsToDrive
 
-        //     // Find best seat
-        //     let seatFinder = new ClosestObjectFinder<VehicleSeat>(this.position)
-        //     for (const seat of vehicle.seats) {
-        //         if (wantsToDrive) {
-        //             // Consider driver seats
-        //             if (seat.type === SeatType.Driver) {
-        //                 seat.seatPointObject.getWorldPosition(worldPos)
-        //                 seatFinder.consider(seat, worldPos)
-        //             }
-        //             // Consider passenger seats connected to driver seats
-        //             else if (seat.type === SeatType.Passenger) {
-        //                 for (const connSeat of seat.connectedSeats) {
-        //                     if (connSeat.type === SeatType.Driver) {
-        //                         seat.seatPointObject.getWorldPosition(worldPos)
-        //                         seatFinder.consider(seat, worldPos)
-        //                         break
-        //                     }
-        //                 }
-        //             }
-        //         } else {
-        //             // Consider passenger seats
-        //             if (seat.type === SeatType.Passenger) {
-        //                 seat.seatPointObject.getWorldPosition(worldPos)
-        //                 seatFinder.consider(seat, worldPos)
-        //             }
-        //         }
-        //     }
+            // Find best seat
+            let seatFinder = new ClosestObjectFinder<VehicleSeat>(this.position)
+            for (const seat of vehicle.seats) {
+                if (wantsToDrive) {
+                    // Consider driver seats
+                    if (seat.type === SeatType.Driver) {
+                        seat.seatPointObject.getWorldPosition(worldPos)
+                        seatFinder.consider(seat, worldPos)
+                    }
+                    // Consider passenger seats connected to driver seats
+                    else if (seat.type === SeatType.Passenger) {
+                        for (const connSeat of seat.connectedSeats) {
+                            if (connSeat.type === SeatType.Driver) {
+                                seat.seatPointObject.getWorldPosition(worldPos)
+                                seatFinder.consider(seat, worldPos)
+                                break
+                            }
+                        }
+                    }
+                } else {
+                    // Consider passenger seats
+                    if (seat.type === SeatType.Passenger) {
+                        seat.seatPointObject.getWorldPosition(worldPos)
+                        seatFinder.consider(seat, worldPos)
+                    }
+                }
+            }
 
-        //     if (seatFinder.closestObject !== undefined) {
-        //         let targetSeat = seatFinder.closestObject
-        //         vehicleEntryInstance.targetSeat = targetSeat
+            if (seatFinder.closestObject !== undefined) {
+                let targetSeat = seatFinder.closestObject
+                vehicleEntryInstance.targetSeat = targetSeat
 
-        //         let entryPointFinder = new ClosestObjectFinder<Object3D>(
-        //             this.position
-        //         )
+                let entryPointFinder = new ClosestObjectFinder<Object3D>(
+                    this.position
+                )
 
-        //         for (const point of targetSeat.entryPoints) {
-        //             point.getWorldPosition(worldPos)
-        //             entryPointFinder.consider(point, worldPos)
-        //         }
+                for (const point of targetSeat.entryPoints) {
+                    point.getWorldPosition(worldPos)
+                    entryPointFinder.consider(point, worldPos)
+                }
 
-        //         if (entryPointFinder.closestObject !== undefined) {
-        //             vehicleEntryInstance.entryPoint = entryPointFinder.closestObject
-        //             this.triggerAction('up', true)
-        //             this.vehicleEntryInstance = vehicleEntryInstance
-        //         }
-        //     }
-        // }
+                if (entryPointFinder.closestObject !== undefined) {
+                    vehicleEntryInstance.entryPoint = entryPointFinder.closestObject
+                    this.triggerAction('up', true)
+                    this.vehicleEntryInstance = vehicleEntryInstance
+                }
+            }
+        }
     }
 
     public enterVehicle(seat: VehicleSeat, entryPoint: THREE.Object3D): void {
         this.resetControls()
 
-        // sepinaco commented
-        // if (seat.door?.rotation < 0.5) {
-        //     this.setState(new OpenVehicleDoor(this, seat, entryPoint))
-        // } else {
-        //     this.setState(new EnteringVehicle(this, seat, entryPoint))
-        // }
+        if (seat.door?.rotation && seat.door.rotation < 0.5) {
+            this.setState(new OpenVehicleDoor(this, seat, entryPoint))
+        } else {
+            this.setState(new EnteringVehicle(this, seat, entryPoint))
+        }
     }
 
-    // sepinaco commented
-    // public teleportToVehicle(vehicle: Vehicle, seat: VehicleSeat): void {
-    //     this.resetVelocity()
-    //     this.rotateModel()
-    //     this.setPhysicsEnabled(false)
-    //     ;(vehicle as unknown as THREE.Object3D).attach(this)
+    public teleportToVehicle(vehicle: Vehicle, seat: VehicleSeat): void {
+        this.resetVelocity()
+        this.rotateModel()
+        this.setPhysicsEnabled(false)
+        ;(vehicle as unknown as THREE.Object3D).attach(this)
 
-    //     this.setPosition(
-    //         seat.seatPointObject.position.x,
-    //         seat.seatPointObject.position.y + 0.6,
-    //         seat.seatPointObject.position.z
-    //     )
-    //     this.quaternion.copy(seat.seatPointObject.quaternion)
+        this.setPosition(
+            seat.seatPointObject.position.x,
+            seat.seatPointObject.position.y + 0.6,
+            seat.seatPointObject.position.z
+        )
+        this.quaternion.copy(seat.seatPointObject.quaternion)
 
-    //     this.occupySeat(seat)
-    //     this.setState(new Driving(this, seat))
+        this.occupySeat(seat)
+        this.setState(new Driving(this, seat))
 
-    //     this.startControllingVehicle(vehicle, seat)
-    // }
+        this.startControllingVehicle(vehicle, seat)
+    }
 
     public startControllingVehicle(
         vehicle: IControllable,
