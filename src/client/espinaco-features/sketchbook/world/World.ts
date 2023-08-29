@@ -37,6 +37,7 @@ import { Vehicle } from '../vehicles/Vehicle'
 import CannonDebugRenderer from '../../../utils/cannonDebugRenderer'
 import { CollisionGroups } from '../enums/CollisionGroups'
 import { TrimeshCollider } from '../physics/colliders/TrimeshCollider'
+import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
 // import { Path } from './Path'
 // import { CollisionGroups } from '../enums/CollisionGroups'
 // import { BoxCollider } from '../physics/colliders/BoxCollider'
@@ -89,7 +90,14 @@ export class World {
 
     private lastScenarioID: string = 'lastScenarioID undefined'
 
-    constructor(worldScenePath?: any) {
+    constructor(
+        scene: THREE.Scene,
+        camera: THREE.PerspectiveCamera,
+        renderer: THREE.WebGLRenderer,
+        listener: THREE.AudioListener,
+        labelRenderer: CSS2DRenderer,
+        worldScenePath?: any
+    ) {
         console.log('World Sketchbook run! :) =============')
 
         const scope = this
@@ -108,42 +116,45 @@ export class World {
         // }
 
         // Renderer
-        this.renderer = new THREE.WebGLRenderer()
-        this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setSize(window.innerWidth, window.innerHeight)
-        this.renderer.toneMapping = THREE.ACESFilmicToneMapping
-        this.renderer.toneMappingExposure = 1.0
-        this.renderer.shadowMap.enabled = true
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+        this.renderer = renderer
+        // this.renderer = new THREE.WebGLRenderer()
+        // this.renderer.setPixelRatio(window.devicePixelRatio)
+        // this.renderer.setSize(window.innerWidth, window.innerHeight)
+        // this.renderer.toneMapping = THREE.ACESFilmicToneMapping
+        // this.renderer.toneMappingExposure = 1.0
+        // this.renderer.shadowMap.enabled = true
+        // this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
         // sepinaco commented
         // this.generateHTML()
 
         // Auto window resize
-        function onWindowResize(): void {
-            scope.camera.aspect = window.innerWidth / window.innerHeight
-            scope.camera.updateProjectionMatrix()
-            scope.renderer.setSize(window.innerWidth, window.innerHeight)
-            // sepinaco commented
-            // fxaaPass.uniforms['resolution'].value.set(
-            //     1 / (window.innerWidth * pixelRatio),
-            //     1 / (window.innerHeight * pixelRatio)
-            // )
-            // scope.composer.setSize(
-            //     window.innerWidth * pixelRatio,
-            //     window.innerHeight * pixelRatio
-            // )
-        }
-        window.addEventListener('resize', onWindowResize, false)
+        // function onWindowResize(): void {
+        //     scope.camera.aspect = window.innerWidth / window.innerHeight
+        //     scope.camera.updateProjectionMatrix()
+        //     scope.renderer.setSize(window.innerWidth, window.innerHeight)
+        //     // sepinaco commented
+        //     // fxaaPass.uniforms['resolution'].value.set(
+        //     //     1 / (window.innerWidth * pixelRatio),
+        //     //     1 / (window.innerHeight * pixelRatio)
+        //     // )
+        //     // scope.composer.setSize(
+        //     //     window.innerWidth * pixelRatio,
+        //     //     window.innerHeight * pixelRatio
+        //     // )
+        // }
+        // window.addEventListener('resize', onWindowResize, false)
 
         // Three.js scene
-        this.graphicsWorld = new THREE.Scene()
-        this.camera = new THREE.PerspectiveCamera(
-            80,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1010
-        )
+        this.graphicsWorld = scene
+        this.camera = camera
+        // this.graphicsWorld = new THREE.Scene()
+        // this.camera = new THREE.PerspectiveCamera(
+        //     80,
+        //     window.innerWidth / window.innerHeight,
+        //     0.1,
+        //     1010
+        // )
 
         // Passes
         // sepinaco commented
