@@ -1,0 +1,10 @@
+============================
+
+el error es Unhandled Promise Rejection: TypeError: Cannot call a class constructor without |new|
+
+era porque webpack convertia el codigo de herencia sin añadirle el new al padre:     var _this = _super.call(this) || this;
+
+se ha solucionado poniendo es6 en vez de es5 en el tsconfig.json
+
+
+============================
