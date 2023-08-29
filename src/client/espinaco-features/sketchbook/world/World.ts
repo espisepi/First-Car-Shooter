@@ -188,18 +188,17 @@ export class World {
         // this.createParamsGUI(scope)
 
         // Initialization
+        this.inputManager = new InputManager(this, this.renderer.domElement)
+        this.cameraOperator = new CameraOperator(
+            this,
+            this.camera,
+            this.params.Mouse_Sensitivity
+        )
         // sepinaco commented
-        // this.inputManager = new InputManager(this, this.renderer.domElement)
-        // this.cameraOperator = new CameraOperator(
-        //     this,
-        //     this.camera,
-        //     this.params.Mouse_Sensitivity
-        // )
         // this.sky = new Sky(this)
 
         // Load scene if path is supplied
         if (worldScenePath !== undefined) {
-            // sepinaco commented
             let loadingManager = new LoadingManager(this)
             loadingManager.onFinishedCallback = () => {
                 this.update(1, 1)
@@ -245,12 +244,11 @@ export class World {
         })
 
         // Lerp time scale
-        // sepinaco commented
-        // this.params.Time_Scale = THREE.MathUtils.lerp(
-        //     this.params.Time_Scale,
-        //     this.timeScaleTarget,
-        //     0.2
-        // )
+        this.params.Time_Scale = THREE.MathUtils.lerp(
+            this.params.Time_Scale,
+            this.timeScaleTarget,
+            0.2
+        )
 
         // Physics debug
         // sepinaco commented
