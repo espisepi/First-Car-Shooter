@@ -35,6 +35,8 @@ import { Character } from '../characters/Character'
 import { InputManager } from '../core/InputManager'
 import { Vehicle } from '../vehicles/Vehicle'
 import CannonDebugRenderer from '../../../utils/cannonDebugRenderer'
+import { CollisionGroups } from '../enums/CollisionGroups'
+import { TrimeshCollider } from '../physics/colliders/TrimeshCollider'
 // import { Path } from './Path'
 // import { CollisionGroups } from '../enums/CollisionGroups'
 // import { BoxCollider } from '../physics/colliders/BoxCollider'
@@ -406,20 +408,18 @@ export class World {
                                 phys.body.quaternion.copy(
                                     Utils.cannonQuat(child.quaternion)
                                 )
-                                // sepinaco commented
-                                // phys.body.computeAABB()
 
-                                // sepinaco commented
-                                // phys.body.shapes.forEach((shape) => {
-                                //     shape.collisionFilterMask =
-                                //         ~CollisionGroups.TrimeshColliders
-                                // })
+                                phys.body.updateAABB()
+
+                                phys.body.shapes.forEach((shape) => {
+                                    shape.collisionFilterMask =
+                                        ~CollisionGroups.TrimeshColliders
+                                })
 
                                 this.physicsWorld.addBody(phys.body)
                             } else if (child.userData.type === 'trimesh') {
-                                // sepinaco commented
-                                // let phys = new TrimeshCollider(child, {})
-                                // this.physicsWorld.addBody(phys.body)
+                                let phys = new TrimeshCollider(child, {})
+                                this.physicsWorld.addBody(phys.body)
                             }
 
                             child.visible = false
@@ -431,7 +431,6 @@ export class World {
                     }
 
                     if (child.userData.data === 'scenario') {
-                        // sepinaco commented
                         this.scenarios.push(new Scenario(child, this))
                     }
                 }
