@@ -15,11 +15,11 @@ import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
 import CannonUtils from './utils/cannonUtils'
 
 export default class Game {
-    private scene: THREE.Scene
-    private camera: THREE.PerspectiveCamera
-    private renderer: THREE.WebGLRenderer
-    private listener: THREE.AudioListener
-    private labelRenderer: CSS2DRenderer
+    public scene: THREE.Scene
+    public camera: THREE.PerspectiveCamera
+    public renderer: THREE.WebGLRenderer
+    public listener: THREE.AudioListener
+    public labelRenderer: CSS2DRenderer
     car: Car
     earth: Earth
     private physics: Physics
