@@ -319,9 +319,7 @@ export class World {
         let unscaledTimeStep =
             this.requestDelta + this.renderDelta + this.logicDelta
         // sepinaco commented
-        // let timeStep = unscaledTimeStep * this.params.Time_Scale
-        // sepinaco code provisional
-        let timeStep = 1.0
+        let timeStep = unscaledTimeStep * this.params.Time_Scale
         timeStep = Math.min(timeStep, 1 / 30) // min 30 fps
 
         // Logic
@@ -344,6 +342,8 @@ export class World {
         // sepinaco commented
         // if (this.params.FXAA) this.composer.render()
         // else this.renderer.render(this.graphicsWorld, this.camera)
+        // sepinaco sustituye por
+        this.renderer.render(this.graphicsWorld, this.camera)
 
         // Measuring render time
         this.renderDelta = this.clock.getDelta()
