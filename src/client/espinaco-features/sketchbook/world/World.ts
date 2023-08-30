@@ -92,6 +92,8 @@ export class World {
 
     public loadingManager?: LoadingManager
 
+    busySpawnNewCharacter: boolean = false
+
     constructor(
         scene: THREE.Scene,
         camera: THREE.PerspectiveCamera,
@@ -529,6 +531,8 @@ export class World {
         }
     }
 
+    // Multiplayer Methods below =============================================
+
     public spawnNewPlayerCharacter(nameCharacter: string) {
         this.loadingManager?.loadGLTF('build/assets/boxman.glb', (model) => {
             let player = new Character(model, nameCharacter)
@@ -540,6 +544,32 @@ export class World {
             this.add(player)
             // player.takeControl()
         })
+    }
+
+    getCharacterByName(surnamePlayer: string): Character | null {
+        const [character] = this.characters.filter((character: Character) =>
+            character.name.includes(surnamePlayer)
+        )
+        return character
+    }
+
+    removeTarget(surnamePlayer: string) {
+        const character = this.getCharacterByName(surnamePlayer)
+
+        if (character) {
+            console.warn('Character finder to remove!!!! =====: ', {
+                characterFinder: character,
+                characters: this.characters,
+                surnamePlayer,
+            })
+            character.removeFromWorld(this)
+        } else {
+            console.error('Character not finder to remove! ============', {
+                characterFinder: character,
+                characters: this.characters,
+                surnamePlayer,
+            })
+        }
     }
 
     updateTargets(data: any) {

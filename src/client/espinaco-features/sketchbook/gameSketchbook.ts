@@ -8,6 +8,7 @@ import * as THREE from 'three'
 
 import * as Sketchbook from './sketchbook'
 import Player from '../../player'
+import { Character } from './characters/Character'
 
 export default class GameSketchbook /* extends Game */ {
     public world: Sketchbook.World
@@ -21,7 +22,7 @@ export default class GameSketchbook /* extends Game */ {
     public socket: Socket
     private updateInterval: any //used to update server
     // players: { [id: string]: Player } = {}
-    players: { [id: string]: any } = {}
+    players: { [id: string]: Character } = {}
     private myId = ''
     private timestamp = 0
 
@@ -72,7 +73,9 @@ export default class GameSketchbook /* extends Game */ {
             console.log('disconnected ' + message)
             clearInterval(this.updateInterval)
             Object.keys(this.players).forEach((p) => {
-                this.players[p].dispose()
+                // this.players[p].dispose()
+                this.players[p].removeFromWorld(this.world)
+                delete this.players[p]
             })
         })
         this.socket.on(
@@ -233,6 +236,9 @@ export default class GameSketchbook /* extends Game */ {
         this.socket.on('removePlayer', (p: string) => {
             console.log('deleting player ' + p)
             // this.players[p].dispose()
+            console.log('OYEEEEEEEEE', { player: this.players[p] })
+            // this.world.removeTarget(this.players[p].sn)
+            this.players[p].removeFromWorld(this.world)
             delete this.players[p]
         })
 
@@ -251,14 +257,32 @@ export default class GameSketchbook /* extends Game */ {
                     if (!this.players[p]) {
                         console.log('adding player ' + p)
 
-                        this.players[p] = 'player: ' + p
+                        // this.players[p] = 'player: ' + p
                         // this.players[p] = new Player(
                         //     this.scene,
                         //     this.physics,
                         //     this.listener
                         // )
-                        // Instanciar en el world un character que corresponde con el nuevo player unido
-                        this.world.spawnNewPlayerCharacter(gameData.players[p].sn)
+
+                        const surname = gameData.players[p].sn
+
+                        const character = this.world.getCharacterByName(surname)
+                        if (character) {
+                            this.players[p] = character
+                            this.world.busySpawnNewCharacter = false
+                        } else {
+                            console.warn(
+                                'Error al encontrar el character, se crea de nuevo!!! ======',
+                                {
+                                    surname,
+                                }
+                            )
+                            if (!this.world.busySpawnNewCharacter) {
+                                // Instanciar en el world un character que corresponde con el nuevo player unido
+                                this.world.spawnNewPlayerCharacter(surname)
+                                this.world.busySpawnNewCharacter = true
+                            }
+                        }
 
                         // this.players[p].updateTargets(gameData.players[p])
                         this.world.updateTargets(gameData.players[p])
