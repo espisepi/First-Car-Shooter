@@ -250,14 +250,18 @@ export default class GameSketchbook /* extends Game */ {
                 if (p !== this.myId) {
                     if (!this.players[p]) {
                         console.log('adding player ' + p)
+
+                        this.players[p] = 'player: ' + p
                         // this.players[p] = new Player(
                         //     this.scene,
                         //     this.physics,
                         //     this.listener
                         // )
-                        this.players[p] = 'player: ' + p
                         // Instanciar en el world un character que corresponde con el nuevo player unido
-                        this.world.spawnNewPlayerCharacter()
+                        this.world.spawnNewPlayerCharacter(gameData.players[p].sn)
+
+                        // this.players[p].updateTargets(gameData.players[p])
+                        this.world.updateTargets(gameData.players[p])
 
                         // if (this.world.scenarios[0]) {
                         //     this.world.scenarios[0].createSpawnCharacter()
@@ -269,6 +273,7 @@ export default class GameSketchbook /* extends Game */ {
                         // }
                     }
                     // this.players[p].updateTargets(gameData.players[p])
+                    this.world.updateTargets(gameData.players[p])
                 }
             })
             // console.log('Game Data!!! ======================', gameData)

@@ -529,9 +529,9 @@ export class World {
         }
     }
 
-    public spawnNewPlayerCharacter() {
+    public spawnNewPlayerCharacter(nameCharacter: string) {
         this.loadingManager?.loadGLTF('build/assets/boxman.glb', (model) => {
-            let player = new Character(model)
+            let player = new Character(model, nameCharacter)
             // let worldPos = new THREE.Vector3()
             // this.object.getWorldPosition(worldPos)
             // player.setPosition(worldPos.x, worldPos.y, worldPos.z)
@@ -540,6 +540,116 @@ export class World {
             this.add(player)
             // player.takeControl()
         })
+    }
+
+    updateTargets(data: any) {
+        const surnameTarget = data.sn
+        const positionTarget = data.p
+        const quaternionTarget = data.q
+
+        // console.log(surnameTarget)
+        // console.log(this.characters)
+
+        this.characters.forEach((character: Character) => {
+            if (character.name.includes(surnameTarget)) {
+                // console.log('ENCONTRADO! :)')ç
+                // Con el position no se mueve un character ya que utiliza fisicas
+                // character.position.set(
+                //     positionTarget.x,
+                //     positionTarget.y,
+                //     positionTarget.z
+                // )
+                character.characterCapsule.body.position.set(
+                    positionTarget.x,
+                    positionTarget.y,
+                    positionTarget.z
+                )
+            }
+        })
+
+        // this.screenName = data.sn
+        // if (this.lastScreenName !== this.screenName) {
+        //     //changed
+        //     this.annotationDiv.innerHTML = this.screenName
+        //     this.lastScreenName = this.screenName
+        // }
+
+        // this.targetPosFrame.set(data.p.x, data.p.y, data.p.z)
+        // this.targetPosTurret.set(data.tp.x, data.tp.y, data.tp.z)
+        // this.targetPosWheelLF.set(data.w[0].p.x, data.w[0].p.y, data.w[0].p.z)
+        // this.targetPosWheelRF.set(data.w[1].p.x, data.w[1].p.y, data.w[1].p.z)
+        // this.targetPosWheelLB.set(data.w[2].p.x, data.w[2].p.y, data.w[2].p.z)
+        // this.targetPosWheelRB.set(data.w[3].p.x, data.w[3].p.y, data.w[3].p.z)
+
+        // this.frameMesh.quaternion.slerp(
+        //     new THREE.Quaternion(data.q._x, data.q._y, data.q._z, data.q._w),
+        //     0.2
+        // )
+
+        // this.turretMesh.quaternion.slerp(
+        //     new THREE.Quaternion(data.tq._x, data.tq._y, data.tq._z, data.tq._w),
+        //     0.2 //faster
+        // )
+
+        // this.wheelLFMesh.quaternion.slerp(
+        //     new THREE.Quaternion(
+        //         data.w[0].q._x,
+        //         data.w[0].q._y,
+        //         data.w[0].q._z,
+        //         data.w[0].q._w
+        //     ),
+        //     0.2
+        // )
+
+        // this.wheelRFMesh.quaternion.slerp(
+        //     new THREE.Quaternion(
+        //         data.w[1].q._x,
+        //         data.w[1].q._y,
+        //         data.w[1].q._z,
+        //         data.w[1].q._w
+        //     ),
+        //     0.2
+        // )
+
+        // this.wheelLBMesh.quaternion.slerp(
+        //     new THREE.Quaternion(
+        //         data.w[2].q._x,
+        //         data.w[2].q._y,
+        //         data.w[2].q._z,
+        //         data.w[2].q._w
+        //     ),
+        //     0.2
+        // )
+
+        // this.wheelRBMesh.quaternion.slerp(
+        //     new THREE.Quaternion(
+        //         data.w[3].q._x,
+        //         data.w[3].q._y,
+        //         data.w[3].q._z,
+        //         data.w[3].q._w
+        //     ),
+        //     0.2
+        // )
+
+        // for (let i = 0; i < 3; i++) {
+        //     if (data.b[i].c > this.lastBulletCounter[i]) {
+        //         this.lastBulletCounter[i] = data.b[i].c
+        //         if (this.shootSound.isPlaying) {
+        //             this.shootSound.stop()
+        //         }
+        //         this.shootSound.play()
+        //         //console.log("player shoot sound")
+        //     }
+        //     this.bulletMesh[i].position.set(
+        //         data.b[i].p.x,
+        //         data.b[i].p.y,
+        //         data.b[i].p.z
+        //     )
+        // }
+
+        // this.carSound.setPlaybackRate(Math.abs(data.v / 50) + Math.random() / 9)
+
+        // this.enabled = data.e
     }
 
     public updateControls(controls: any): void {

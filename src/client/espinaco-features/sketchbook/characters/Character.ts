@@ -82,8 +82,13 @@ export class Character extends THREE.Object3D implements IWorldEntity {
 
     private physicsEnabled: boolean = true
 
-    constructor(gltf: any) {
+    constructor(gltf: any, nameCharacter?: string) {
         super()
+
+        if (nameCharacter) {
+            this.name = nameCharacter
+            console.log('Creando el Character con el name: ' + nameCharacter)
+        }
 
         this.readCharacterData(gltf)
         this.setAnimations(gltf.animations)
