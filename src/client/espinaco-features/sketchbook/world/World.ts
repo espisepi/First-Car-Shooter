@@ -559,11 +559,16 @@ export class World {
                 //     positionTarget.y,
                 //     positionTarget.z
                 // )
-                character.characterCapsule.body.position.set(
+                character.setPosition(
                     positionTarget.x,
                     positionTarget.y,
                     positionTarget.z
                 )
+                // character.characterCapsule.body.position.set(
+                //     positionTarget.x,
+                //     positionTarget.y,
+                //     positionTarget.z
+                // )
             }
         })
 
