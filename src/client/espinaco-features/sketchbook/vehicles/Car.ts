@@ -49,6 +49,8 @@ export class Car extends Vehicle implements IControllable {
         // this.collision.preStep = (body: CANNON.Body) => {
         //     this.physicsPreStep(body, this)
         // }
+        // sepinaco sustituye por:
+        this.configurePhysicsPreStep()
 
         this.actions = {
             throttle: new KeyBinding('KeyW'),
@@ -62,6 +64,30 @@ export class Car extends Vehicle implements IControllable {
         }
 
         this.steeringSimulator = new SpringSimulator(60, 10, 0.6)
+    }
+
+    private configurePhysicsPreStep(): void {
+        const self = this
+        const body = this.collision
+        // console.log('OYEEEEE', { worldCar: this })
+        // this.world?.physicsWorld.addEventListener('preStep', function (event: any) {
+        //     self.physicsPreStep(body, self)
+        // })
+
+        // Función que se ejecutará en intervalos
+        const buscarElemento = () => {
+            console.log('SE EJECUTRAAAAAA')
+            const physicsWorld = self.world?.physicsWorld
+            if (physicsWorld) {
+                console.log('¡Elemento encontrado!')
+                clearInterval(intervalo)
+                self.physicsPreStep(body, self)
+                console.log('CAMBIADO EL WORLDDDDD =========')
+            }
+        }
+
+        // Configurar el intervalo
+        const intervalo = setInterval(buscarElemento, 500) // Se ejecutará cada 1000 ms (1 segundo)
     }
 
     public noDirectionPressed(): boolean {
