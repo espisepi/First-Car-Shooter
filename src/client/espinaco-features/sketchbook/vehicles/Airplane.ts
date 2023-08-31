@@ -43,6 +43,8 @@ export class Airplane extends Vehicle implements IControllable, IWorldEntity {
         // this.collision.preStep = (body: CANNON.Body) => {
         //     this.physicsPreStep(body, this)
         // }
+        // sepinaco sustituye por:
+        this.configurePhysicsPreStep()
 
         this.actions = {
             throttle: new KeyBinding('ShiftLeft'),
@@ -165,6 +167,23 @@ export class Airplane extends Vehicle implements IControllable, IWorldEntity {
             elevator.rotation.y = this.elevatorSimulator.position
         })
         this.rudder.rotation.y = this.rudderSimulator.position
+    }
+
+    private configurePhysicsPreStep(): void {
+        const self = this
+        const body = this.collision
+
+        // Función que se ejecutará en intervalos
+        const buscarElemento = () => {
+            const physicsWorld = self.world?.physicsWorld
+            if (physicsWorld) {
+                clearInterval(intervalo)
+                self.physicsPreStep(body, self)
+            }
+        }
+
+        // Configurar el intervalo
+        const intervalo = setInterval(buscarElemento, 500) // Se ejecutará cada 1000 ms (1 segundo)
     }
 
     public physicsPreStep(body: CANNON.Body, plane: Airplane): void {
