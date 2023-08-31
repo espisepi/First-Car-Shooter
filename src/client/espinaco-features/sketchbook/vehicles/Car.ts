@@ -118,7 +118,7 @@ export class Car extends Vehicle implements IControllable {
         // Engine
         const engineForce = 500
         const maxGears = 5
-        const gearsMaxSpeeds = {
+        const gearsMaxSpeeds: Record<string, number> = {
             R: -4,
             '0': 0,
             '1': 5,
@@ -141,16 +141,15 @@ export class Car extends Vehicle implements IControllable {
 
                 this.applyEngineForce(force)
             } else {
-                // sepinaco commented
-                // const powerFactor =
-                //     (gearsMaxSpeeds[this.gear] - this.speed) /
-                //     (gearsMaxSpeeds[this.gear] - gearsMaxSpeeds[this.gear - 1])
-                // if (powerFactor < 0.1 && this.gear < maxGears) this.shiftUp()
-                // else if (this.gear > 1 && powerFactor > 1.2) this.shiftDown()
-                // else if (this.actions.throttle.isPressed) {
-                //     const force = (engineForce / this.gear) * powerFactor ** 1
-                //     this.applyEngineForce(-force)
-                // }
+                const powerFactor =
+                    (gearsMaxSpeeds[this.gear] - this.speed) /
+                    (gearsMaxSpeeds[this.gear] - gearsMaxSpeeds[this.gear - 1])
+                if (powerFactor < 0.1 && this.gear < maxGears) this.shiftUp()
+                else if (this.gear > 1 && powerFactor > 1.2) this.shiftDown()
+                else if (this.actions.throttle.isPressed) {
+                    const force = (engineForce / this.gear) * powerFactor ** 1
+                    this.applyEngineForce(-force)
+                }
             }
         }
 
